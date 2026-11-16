@@ -370,31 +370,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ============ 10. ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ (МОБИЛЬНЫЕ) ============ */
+    /* ============ 10. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
     function initStackingCards() {
         if (window.innerWidth > 768) return;
 
         const cards = document.querySelectorAll('.tour-card');
         if (cards.length === 0) return;
 
-        // Сбрасываем классы у всех карточек
+        // Сбрасываем активные классы
         cards.forEach(c => c.classList.remove('is-active'));
 
-        // Делаем ПОСЛЕДНЮЮ карточку активной по умолчанию
-        cards[cards.length - 1].classList.add('is-active');
+        // Делаем первую карточку активной по умолчанию (чтобы колода выглядела собранной)
+        cards[0].classList.add('is-active');
 
-        // Навешиваем обработчик клика на каждую карточку
+        // Вешаем обработчик клика на каждую карточку
         cards.forEach(card => {
             card.addEventListener('click', function (e) {
-                // Если кликнули по уже активной карточке — ничего не делаем
+                // Если она уже активна, ничего не делаем
                 if (this.classList.contains('is-active')) return;
 
                 e.stopPropagation();
 
-                // Сворачиваем все карточки
+                // Сворачиваем все
                 cards.forEach(c => c.classList.remove('is-active'));
 
-                // Раскрываем ту, на которую кликнули
+                // Раскрываем выбранную
                 this.classList.add('is-active');
             });
         });
