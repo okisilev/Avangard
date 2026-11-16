@@ -1421,28 +1421,28 @@ a.contact-detail__text:hover {
         display: flex;
         flex-direction: column;
         padding-bottom: 50px;
-        /* Убираем gap, так как используем margin */
         gap: 0;
     }
 
     .tour-card {
-        /* Убираем sticky! Теперь они просто лежат в потоке */
-        position: relative;
-        height: 72px;
-        /* Высота свернутой карточки */
-
-        /* Отрицательный отступ, чтобы они наезжали друг на друга */
+        /* СТИКИ: первая карточка прилипает к верху */
+        position: sticky;
+        top: 80px; /* Отступ от верха экрана (под шапкой) */
+        
+        /* Высота свернутой карточки (виден только заголовок) */
+        height: 72px; 
+        
+        /* Отрицательный отступ: каждая следующая наезжает на предыдущую */
         margin-top: -24px;
-
+        
         transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s ease;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
-        /* Тень сверху для объема */
         background: #fff;
-
-        /* Важно для наложения: каждая следующая карточка выше предыдущей */
-        z-index: 1;
+        
+        /* Базовый z-index */
+        z-index: 1; 
     }
 
     /* Первая карточка не должна наезжать на фильтры */
@@ -1450,13 +1450,22 @@ a.contact-detail__text:hover {
         margin-top: 0;
     }
 
+    /* ЗАСТАВЛЯЕМ КАРТОЧКИ СКЛАДЫВАТЬСЯ ПРАВИЛЬНО: 
+       каждая следующая должна быть выше предыдущей, 
+       чтобы при скролле она перекрывала верхнюю */
+    .tour-card:nth-child(2) { z-index: 2; }
+    .tour-card:nth-child(3) { z-index: 3; }
+    .tour-card:nth-child(4) { z-index: 4; }
+    .tour-card:nth-child(5) { z-index: 5; }
+    .tour-card:nth-child(6) { z-index: 6; }
+    .tour-card:nth-child(7) { z-index: 7; }
+    .tour-card:nth-child(8) { z-index: 8; }
+
     /* Активная карточка (раскрытая) */
     .tour-card.is-active {
         height: 520px;
-        /* Поднимаем ее на самый верхний слой */
-        z-index: 100;
-        margin-bottom: 20px;
-        /* Отступ снизу, чтобы следующая карточка не прилипала */
+        z-index: 100; /* Поднимаем на самый верх */
+        margin-bottom: 20px; 
     }
 
     /* Скрываем картинку и оверлей в свернутом состоянии */

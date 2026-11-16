@@ -375,54 +375,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ============ 10. ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ (МОБИЛЬНЫЕ) ============ */
     function initStackingCards() {
-        if (window.innerWidth > 768) return;
-
-        const cards = document.querySelectorAll('.tour-card');
-
-        const updateCards = () => {
-            cards.forEach((card, index) => {
-                const nextCard = cards[index + 1];
-                if (!nextCard) return;
-
-                const cardRect = card.getBoundingClientRect();
-                const nextCardRect = nextCard.getBoundingClientRect();
-                const distance = cardRect.bottom - nextCardRect.top;
-
-                if (distance > 0) {
-                    const progress = Math.min(distance / 100, 1);
-                    const scale = 1 - (progress * 0.05);
-                    const opacity = 1 - (progress * 0.3);
-                    card.style.transform = `scale(${scale})`;
-                    card.style.opacity = opacity;
-                } else {
-                    card.style.transform = 'scale(1)';
-                    card.style.opacity = '1';
-                }
-            });
-        };
-
-        window.addEventListener('scroll', updateCards);
-        updateCards();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initStackingCards);
-    } else {
-        initStackingCards();
-    }
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            document.querySelectorAll('.tour-card').forEach(card => {
-                card.style.transform = '';
-                card.style.opacity = '';
-            });
-        }
-        initStackingCards();
-    });
-
-    /* ============ 11. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
-    function initStackingCards() {
         const cards = document.querySelectorAll('.tour-card');
 
         // Сбрасываем все классы активности при новой инициализации (например, при смене фильтра)
@@ -448,10 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
-    // Обновляем инициализацию после рендера туров
-    // (В функции renderTours после grid.innerHTML = ...)
-    // Убедитесь, что там вызывается initStackingCards();
 
     // Инициализация при первой загрузке
     if (window.innerWidth <= 768) {
