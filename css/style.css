@@ -14,9 +14,7 @@
 }
 
 /* ============ СБРОС ============ */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -82,6 +80,15 @@ button {
     margin: 0 auto;
 }
 
+.section-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-dusty-blue);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
 .section-head--light .section-title {
     color: var(--color-text-light);
 }
@@ -107,7 +114,6 @@ button {
     background: var(--color-dark-green);
     color: var(--color-text-light);
 }
-
 .btn--primary:hover {
     background: #122a1e;
 }
@@ -116,7 +122,6 @@ button {
     background: var(--color-burgundy);
     color: var(--color-text-light);
 }
-
 .btn--accent:hover {
     background: #4a0e14;
 }
@@ -126,7 +131,6 @@ button {
     color: var(--color-text-light);
     border-color: rgba(255, 255, 255, 0.6);
 }
-
 .btn--ghost:hover {
     background: rgba(255, 255, 255, 0.12);
 }
@@ -143,7 +147,6 @@ button {
     align-items: center;
     transition: transform var(--transition), box-shadow var(--transition);
 }
-
 .btn--white:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
@@ -179,7 +182,6 @@ button {
     position: relative;
 }
 
-/* Логотип по центру */
 .header__logo {
     position: absolute;
     left: 50%;
@@ -192,7 +194,6 @@ button {
     white-space: nowrap;
 }
 
-/* Левая и правая части */
 .header__left,
 .header__right {
     display: flex;
@@ -200,7 +201,7 @@ button {
     z-index: 2;
 }
 
-/* ============ ВИДЖЕТ КОНТАКТОВ (В ШАПКЕ) ============ */
+/* ============ ВИДЖЕТ КОНТАКТОВ ============ */
 .contact-widget {
     display: flex;
     align-items: center;
@@ -221,7 +222,6 @@ button {
     border: none;
     transition: background var(--transition);
 }
-
 .contact-widget__burger:hover {
     background: #2c3034;
 }
@@ -262,7 +262,6 @@ button {
     transition: opacity var(--transition);
     opacity: 0.8;
 }
-
 .contact-widget__socials a:hover {
     opacity: 1;
 }
@@ -292,22 +291,14 @@ button {
 }
 
 @keyframes zoomSlow {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.08);
-    }
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
 }
 
 .hero__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom,
-            rgba(26, 59, 43, 0.55) 0%,
-            rgba(26, 59, 43, 0.75) 60%,
-            rgba(26, 59, 43, 0.95) 100%);
+    background: linear-gradient(to bottom, rgba(26, 59, 43, 0.55) 0%, rgba(26, 59, 43, 0.75) 60%, rgba(26, 59, 43, 0.95) 100%);
 }
 
 .hero__content {
@@ -361,17 +352,8 @@ button {
 }
 
 @keyframes scrollLine {
-
-    0%,
-    100% {
-        transform: scaleY(0.4);
-        transform-origin: top;
-    }
-
-    50% {
-        transform: scaleY(1);
-        transform-origin: top;
-    }
+    0%, 100% { transform: scaleY(0.4); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
 }
 
 /* ============ ОТЗЫВЫ ============ */
@@ -396,7 +378,6 @@ button {
     justify-content: space-between;
     transition: transform var(--transition), box-shadow var(--transition);
 }
-
 .testimonial-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
@@ -435,27 +416,63 @@ button {
     color: var(--color-text-muted);
 }
 
-/* ============ ТУРЫ ============ */
+/* ============ ТУРЫ (ОБЩИЕ СТИЛИ) ============ */
+.tours-filters {
+    display: flex;
+    background: #F4F5F7;
+    border-radius: 12px;
+    padding: 6px;
+    margin-bottom: 32px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filter-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    transition: all 0.3s ease;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background: #fff;
+    color: var(--color-text-main);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+}
+
+/* Сетка (Десктоп) */
 .tours__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 28px;
 }
 
+/* Карточка (Десктоп) */
 .tour-card {
     position: relative;
-    border-radius: var(--radius);
+    border-radius: 20px;
     overflow: hidden;
-    aspect-ratio: 3 / 4;
+    height: 500px;
     cursor: pointer;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-    transition: transform var(--transition);
-    z-index: 1;
-    /* Чтобы не перекрывать шапку */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .tour-card:hover {
     transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
 }
 
 .tour-card__img {
@@ -465,6 +482,7 @@ button {
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s ease;
+    z-index: 1;
 }
 
 .tour-card:hover .tour-card__img {
@@ -474,41 +492,73 @@ button {
 .tour-card__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top,
-            rgba(26, 59, 43, 0.92) 0%,
-            rgba(26, 59, 43, 0.4) 45%,
-            transparent 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 2;
 }
 
-.tour-card__content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+.tour-card__header {
+    position: relative;
+    z-index: 3;
     padding: 24px;
     color: #fff;
 }
 
 .tour-card__title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    margin-bottom: 6px;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
+.tour-card__body {
+    position: relative;
+    z-index: 3;
+    padding: 24px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .tour-card__meta {
     font-size: 0.85rem;
-    opacity: 0.85;
-    margin-bottom: 4px;
+    opacity: 0.9;
+}
+
+.tour-card__price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.tour-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 16px;
 }
 
 .tour-card__badge {
     display: inline-block;
     padding: 4px 10px;
     background: var(--color-burgundy);
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 0.75rem;
     font-weight: 600;
-    margin-top: 10px;
+}
+
+.tour-card__spots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    padding: 6px 12px;
+    border-radius: 20px;
 }
 
 /* ============ ПРЕИМУЩЕСТВА ============ */
@@ -529,7 +579,6 @@ button {
     padding: 32px;
     transition: background var(--transition), transform var(--transition);
 }
-
 .advantage:hover {
     background: rgba(255, 255, 255, 0.09);
     transform: translateY(-4px);
@@ -615,7 +664,6 @@ button {
     transition: border-color var(--transition);
     background: #fff;
 }
-
 .form-input:focus {
     outline: none;
     border-color: var(--color-dusty-blue);
@@ -628,7 +676,6 @@ button {
     min-height: 20px;
 }
 
-/* ============ КОНТАКТНЫЕ ДАННЫЕ В СЕКЦИИ ============ */
 .contact__details {
     margin-top: 40px;
     display: flex;
@@ -655,7 +702,6 @@ button {
     line-height: 1.5;
     transition: color var(--transition);
 }
-
 a.contact-detail__text:hover {
     color: var(--color-dusty-blue);
 }
@@ -690,98 +736,10 @@ a.contact-detail__text:hover {
     font-size: 0.9rem;
     transition: color var(--transition);
 }
-
 .footer__nav a:hover {
     color: #fff;
 }
 
-/* Обновленный нижний колонтитул */
-.footer__copy {
-    grid-column: 1 / -1;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 24px;
-    margin-top: 24px;
-
-    /* Делаем flex-контейнер для выравнивания в строку */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-
-    font-size: 0.85rem;
-    opacity: 0.8;
-}
-
-/* Левая часть (копирайт) */
-.footer__copy-left {
-    text-align: left;
-}
-
-/* Центральная часть (документы) */
-.footer__copy-center {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.footer__copy-center a {
-    color: rgba(255, 255, 255, 0.75);
-    text-decoration: none;
-    transition: color var(--transition);
-}
-
-.footer__copy-center a:hover {
-    color: #fff;
-}
-
-/* Правая часть (Telegram) */
-.footer__copy-right {
-    text-align: right;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.footer__copy-right a {
-    color: #fff;
-    font-weight: 500;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: opacity var(--transition);
-}
-
-.footer__copy-right a:hover {
-    opacity: 0.7;
-}
-
-/* Адаптив для мобильных */
-@media (max-width: 768px) {
-    .footer__copy {
-        flex-direction: column;
-        text-align: center;
-        gap: 12px;
-    }
-
-    .footer__copy-left,
-    .footer__copy-center,
-    .footer__copy-right {
-        text-align: center;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .footer__copy-center {
-        flex-direction: column;
-        gap: 8px;
-    }
-}
-
-
-
-/* ============ КУРСЫ ВАЛЮТ В ФУТЕРЕ ============ */
 .footer__rates {
     border-left: 1px solid rgba(255, 255, 255, 0.15);
     padding-left: 30px;
@@ -824,6 +782,59 @@ a.contact-detail__text:hover {
     font-style: italic;
     font-weight: 400;
     font-size: 0.9rem;
+}
+
+.footer__copy {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 24px;
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.footer__copy-left {
+    text-align: left;
+}
+
+.footer__copy-center {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.footer__copy-center a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+.footer__copy-center a:hover {
+    color: #fff;
+}
+
+.footer__copy-right {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer__copy-right a {
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity var(--transition);
+}
+.footer__copy-right a:hover {
+    opacity: 0.7;
 }
 
 /* ============ МОДАЛЬНОЕ ОКНО ============ */
@@ -883,7 +894,6 @@ a.contact-detail__text:hover {
     transition: background 0.3s;
     z-index: 10;
 }
-
 .modal__close:hover {
     background: rgba(255, 255, 255, 0.2);
 }
@@ -946,11 +956,9 @@ a.contact-detail__text:hover {
     font-size: 0.95rem;
     transition: border-color 0.3s, background 0.3s;
 }
-
 .modal-input::placeholder {
     color: rgba(255, 255, 255, 0.4);
 }
-
 .modal-input:focus {
     outline: none;
     border-color: var(--color-dusty-blue);
@@ -1013,7 +1021,7 @@ a.contact-detail__text:hover {
     transition: all 0.2s;
 }
 
-.messenger-radio input:checked+.messenger-radio__box {
+.messenger-radio input:checked + .messenger-radio__box {
     background: rgba(255, 255, 255, 0.15);
     border-color: #fff;
 }
@@ -1050,12 +1058,12 @@ a.contact-detail__text:hover {
     transition: all 0.2s;
 }
 
-.modal-agreement input:checked+.modal-agreement__box {
+.modal-agreement input:checked + .modal-agreement__box {
     background: #fff;
     border-color: #fff;
 }
 
-.modal-agreement input:checked+.modal-agreement__box::after {
+.modal-agreement input:checked + .modal-agreement__box::after {
     content: '';
     position: absolute;
     left: 6px;
@@ -1076,143 +1084,6 @@ a.contact-detail__text:hover {
 .modal-agreement__text a {
     color: rgba(255, 255, 255, 0.8);
     text-decoration: underline;
-}
-
-/* ============ АДАПТИВ ============ */
-@media (max-width: 1024px) {
-    .header__logo {
-        font-size: 1.3rem;
-    }
-
-    .contact-widget__pill {
-        display: none;
-    }
-
-    .footer__container {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .footer__rates {
-        border-left: none;
-        padding-left: 0;
-        grid-column: 1 / -1;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        align-items: center;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        padding-top: 20px;
-    }
-
-    .footer__rates-title {
-        width: 100%;
-        margin-bottom: 0;
-    }
-}
-
-@media (max-width: 992px) {
-    .contact__container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .contact__details {
-        margin-top: 30px;
-    }
-}
-
-@media (max-width: 900px) {
-    .modal__grid {
-        grid-template-columns: 1fr;
-    }
-
-    .modal__image {
-        display: none;
-    }
-
-    .modal__content {
-        padding: 32px 24px;
-    }
-
-    .modal__title {
-        font-size: 1.6rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .section {
-        padding: 70px 0;
-    }
-
-    .btn--white {
-        padding: 10px 16px;
-        font-size: 0.85rem;
-    }
-
-    .btn--white svg {
-        display: none;
-    }
-
-    .header__logo {
-        font-size: 1.1rem;
-    }
-
-    .hero__actions {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .btn--large {
-        width: 100%;
-        max-width: 320px;
-    }
-
-    .footer__container {
-        grid-template-columns: 1fr;
-    }
-
-    .footer__copy {
-        text-align: left;
-    }
-
-    /* ============ ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ ============ */
-    .tours__grid {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        padding-bottom: 50px;
-    }
-
-    .tour-card {
-        position: sticky;
-        top: 100px;
-        margin-bottom: -50px;
-        transform-origin: top center;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
-        border-radius: 20px;
-        aspect-ratio: auto;
-        min-height: 450px;
-        z-index: 1;
-    }
-
-    .tour-card__content {
-        padding: 30px 20px;
-    }
-
-    .tour-card__title {
-        font-size: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .testimonial-card {
-        padding: 24px;
-    }
-
-    .tour-card {
-        aspect-ratio: 4 / 5;
-    }
 }
 
 /* ============ ЮРИДИЧЕСКИЕ СТРАНИЦЫ ============ */
@@ -1256,167 +1127,102 @@ a.contact-detail__text:hover {
     font-weight: 600;
 }
 
-/* ============ СЕКЦИЯ ТУРОВ (НОВЫЙ ДИЗАЙН) ============ */
-.section-label {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--color-dusty-blue);
-    margin-bottom: 8px;
-    font-weight: 600;
+/* ============ АДАПТИВ ============ */
+@media (max-width: 1024px) {
+    .header__logo {
+        font-size: 1.3rem;
+    }
+    .contact-widget__pill {
+        display: none;
+    }
+    .footer__container {
+        grid-template-columns: 1fr 1fr;
+    }
+    .footer__rates {
+        border-left: none;
+        padding-left: 0;
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 20px;
+    }
+    .footer__rates-title {
+        width: 100%;
+        margin-bottom: 0;
+    }
 }
 
-/* Фильтры */
-.tours-filters {
-    display: flex;
-    background: #F4F5F7;
-    border-radius: 12px;
-    padding: 6px;
-    margin-bottom: 32px;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+@media (max-width: 992px) {
+    .contact__container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .contact__details {
+        margin-top: 30px;
+    }
 }
 
-.filter-btn {
-    flex: 1;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    transition: all 0.3s ease;
-    border: none;
-    background: transparent;
-    cursor: pointer;
+@media (max-width: 900px) {
+    .modal__grid {
+        grid-template-columns: 1fr;
+    }
+    .modal__image {
+        display: none;
+    }
+    .modal__content {
+        padding: 32px 24px;
+    }
+    .modal__title {
+        font-size: 1.6rem;
+    }
 }
 
-.filter-btn.active {
-    background: #fff;
-    color: var(--color-text-main);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    font-weight: 600;
-}
-
-/* Сетка карточек (Десктоп) */
-.tours__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 28px;
-}
-
-/* Карточка тура */
-.tour-card {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    height: 500px;
-    cursor: pointer;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.tour-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
-}
-
-.tour-card__img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-    z-index: 1;
-}
-
-.tour-card:hover .tour-card__img {
-    transform: scale(1.08);
-}
-
-.tour-card__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom,
-            rgba(0, 0, 0, 0.4) 0%,
-            rgba(0, 0, 0, 0.1) 40%,
-            rgba(0, 0, 0, 0.8) 100%);
-    z-index: 2;
-}
-
-/* Заголовок (в верхней части) */
-.tour-card__header {
-    position: relative;
-    z-index: 3;
-    padding: 24px;
-    color: #fff;
-}
-
-.tour-card__title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    line-height: 1.2;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-/* Основной контент (в нижней части) */
-.tour-card__body {
-    position: relative;
-    z-index: 3;
-    padding: 24px;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.tour-card__meta {
-    font-size: 0.85rem;
-    opacity: 0.9;
-}
-
-.tour-card__price {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-top: 4px;
-}
-
-.tour-card__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 16px;
-}
-
-.tour-card__badge {
-    display: inline-block;
-    padding: 4px 10px;
-    background: var(--color-burgundy);
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.tour-card__spots {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.8rem;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(5px);
-    padding: 6px 12px;
-    border-radius: 20px;
-}
-
-/* ============ МОБИЛЬНЫЙ СТЕК (ЭФФЕКТ "КОЛОДЫ") ============ */
 @media (max-width: 768px) {
+    .section {
+        padding: 70px 0;
+    }
+    .btn--white {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+    .btn--white svg {
+        display: none;
+    }
+    .header__logo {
+        font-size: 1.1rem;
+    }
+    .hero__actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn--large {
+        width: 100%;
+        max-width: 320px;
+    }
+    .footer__container {
+        grid-template-columns: 1fr;
+    }
+    .footer__copy {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+    .footer__copy-left,
+    .footer__copy-center,
+    .footer__copy-right {
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .footer__copy-center {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* ============ МОБИЛЬНЫЙ СТЕК (ЭФФЕКТ "КОЛОДЫ") ============ */
     .tours__grid {
         display: flex;
         flex-direction: column;
@@ -1425,34 +1231,21 @@ a.contact-detail__text:hover {
     }
 
     .tour-card {
-        /* СТИКИ: первая карточка прилипает к верху */
-        position: sticky;
-        top: 80px; /* Отступ от верха экрана (под шапкой) */
-        
-        /* Высота свернутой карточки (виден только заголовок) */
+        position: relative;
         height: 72px; 
-        
-        /* Отрицательный отступ: каждая следующая наезжает на предыдущую */
         margin-top: -24px;
-        
-        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s ease;
+        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s ease, box-shadow 0.3s ease;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
         background: #fff;
-        
-        /* Базовый z-index */
         z-index: 1; 
     }
 
-    /* Первая карточка не должна наезжать на фильтры */
     .tour-card:first-child {
         margin-top: 0;
     }
 
-    /* ЗАСТАВЛЯЕМ КАРТОЧКИ СКЛАДЫВАТЬСЯ ПРАВИЛЬНО: 
-       каждая следующая должна быть выше предыдущей, 
-       чтобы при скролле она перекрывала верхнюю */
     .tour-card:nth-child(2) { z-index: 2; }
     .tour-card:nth-child(3) { z-index: 3; }
     .tour-card:nth-child(4) { z-index: 4; }
@@ -1461,14 +1254,13 @@ a.contact-detail__text:hover {
     .tour-card:nth-child(7) { z-index: 7; }
     .tour-card:nth-child(8) { z-index: 8; }
 
-    /* Активная карточка (раскрытая) */
     .tour-card.is-active {
         height: 520px;
-        z-index: 100; /* Поднимаем на самый верх */
+        z-index: 100; 
         margin-bottom: 20px; 
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     }
 
-    /* Скрываем картинку и оверлей в свернутом состоянии */
     .tour-card .tour-card__img,
     .tour-card .tour-card__overlay,
     .tour-card .tour-card__body {
@@ -1477,7 +1269,6 @@ a.contact-detail__text:hover {
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    /* В активной карточке показываем всё */
     .tour-card.is-active .tour-card__img,
     .tour-card.is-active .tour-card__overlay,
     .tour-card.is-active .tour-card__body {
@@ -1486,7 +1277,6 @@ a.contact-detail__text:hover {
         transition-delay: 0.1s;
     }
 
-    /* Заголовок свернутой карточки */
     .tour-card__header {
         padding: 0 20px;
         height: 72px;
@@ -1509,7 +1299,6 @@ a.contact-detail__text:hover {
         margin: 0;
     }
 
-    /* Заголовок активной карточки */
     .tour-card.is-active .tour-card__header {
         background: transparent;
         border-bottom: none;
@@ -1527,7 +1316,6 @@ a.contact-detail__text:hover {
         white-space: normal;
     }
 
-    /* Позиционирование картинки */
     .tour-card__img {
         position: absolute;
         inset: 0;
@@ -1536,7 +1324,6 @@ a.contact-detail__text:hover {
         object-fit: cover;
     }
 
-    /* Позиционирование тела карточки */
     .tour-card__body {
         position: absolute;
         bottom: 0;
@@ -1545,5 +1332,11 @@ a.contact-detail__text:hover {
         background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
         padding: 24px;
         color: #fff;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonial-card {
+        padding: 24px;
     }
 }

@@ -373,27 +373,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ============ 10. ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ (МОБИЛЬНЫЕ) ============ */
+    /* ============ 10. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
     function initStackingCards() {
         const cards = document.querySelectorAll('.tour-card');
 
-        // Сбрасываем все классы активности при новой инициализации (например, при смене фильтра)
+        // Сбрасываем все классы активности
         cards.forEach(c => c.classList.remove('is-active'));
 
         if (window.innerWidth > 768) return;
 
         cards.forEach(card => {
-            // По клику раскрываем карточку и сворачиваем остальные
+            // По клику раскрываем карточку
             card.addEventListener('click', function (e) {
-                // Предотвращаем всплытие, чтобы клик не срабатывал на вложенных элементах
                 e.stopPropagation();
 
                 const isAlreadyActive = this.classList.contains('is-active');
 
-                // Сворачиваем все карточки
+                // Сворачиваем все
                 cards.forEach(c => c.classList.remove('is-active'));
 
-                // Если карточка не была активна, делаем её активной
+                // Если не была активна — раскрываем
                 if (!isAlreadyActive) {
                     this.classList.add('is-active');
                 }
@@ -401,15 +400,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Инициализация при первой загрузке
+    // Запуск при загрузке (после рендера туров)
     if (window.innerWidth <= 768) {
         initStackingCards();
     }
 
-    // Перезапуск при изменении размера окна
+    // Перезапуск при ресайзе
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
-            // Сбрасываем стили, если вернулись на десктоп
             document.querySelectorAll('.tour-card').forEach(card => {
                 card.classList.remove('is-active');
             });
