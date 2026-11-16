@@ -359,72 +359,100 @@ document.addEventListener('DOMContentLoaded', () => {
          const cards = document.querySelectorAll('.tour-card');
          if (cards.length === 0) return;
          
-         const headerHeight = 80; // Высота шапки + отступ
+         const headerHeight = 90; // Отступ сверху (padding-top контейнера)
+         const cardCollapsedHeight = 72; // Высота одной свернутой карточки
+         const visibleHeaderPart = 12; // Сколько пикселей заголовка должно торчать из-под карточки
          
          // 1. Делаем первую карточку активной при загрузке
          cards.forEach(c => c.classList.remove('is-active'));
          if(cards[0]) cards[0].classList.add('is-active');
          
-         // 2. Обработчик клика
+         // Функция пересчета позиций всех карточек
+         const updatePositions = () => {
+             const activeCard = document.querySelector('.tour-card.is-active');
+             if (!activeCard) return;
+             
+             const activeIndex = Array.from(cards).indexOf(activeCard);
+             
+             cards.forEach((card, index) => {
+                 // Сбрасываем стили перед расчетом
+                 card.style.transform = '';
+                 
+                 if (index === activeIndex) {
+                     // Активная карточка всегда наверху списка (z-index управляется CSS nth-child + is-active)
+                     return; 
+                 }
+                 
+                 if (index < activeIndex) {
+                     // Карточки ВЫШЕ активной (уже проскролленные)
+                     // Они должны сложиться в стопку под активной карточкой
+                     // Рассчитываем позицию: каждая следующая сдвигается вверх на (высота - видимая часть)
+                     
+                     // Базовое смещение: сколько карточек между этой и активной
+                     const diff = activeIndex - index;
+                     
+                     // Смещение вверх: (diff * (72 - 12))
+                     // Например, если активная 3-я, то 2-я сдвинется на 60px вверх, 1-я на 120px
+                     const shiftUp = diff * (cardCollapsedHeight - visibleHeaderPart);
+                     
+                     card.style.transform = `translateY(-${shiftUp}px)`;
+                     
+                 } else {
+                     // Карточки НИЖЕ активной
+                     // Они должны просто ждать своей очереди внизу.
+                     // Поскольку мы используем absolute, нам нужно вручную расставить их ниже активной.
+                     // Активная занимает 500px. Свернутые занимают 72px.
+                     
+                     // Позиция активной карточки относительно верха контейнера (примерно headerHeight)
+                     // Но так как active card может быть где угодно при скролле, проще привязаться к ней.
+                     
+                     // В данной реализации с absolute, карточки ниже активной будут "висеть" в воздухе,
+                     // если не задать им top. Но так как у нас flow document broken by absolute...
+                     // Нам нужно хитрое решение:
+                     // Карточки ниже активной должны иметь translateY, который учитывает высоту активной (500px)
+                     // минус высота всех свернутых до неё.
+                     
+                     // Это сложно для pure JS без layout thrashing. 
+                     // Упрощенный вариант для stacking effect:
+                     // Просто оставляем их на месте (top: 90px), но сдвигаем вниз на (index * 0), 
+                     // НО! Так как active card растет, она толкает контент? Нет, absolute не толкает.
+                     
+                     // РЕШЕНИЕ: Карточки ниже активной должны быть сдвинуты ВНИЗ на высоту активной карточки (500px) 
+                     // МИНУС высота одной свернутой (72px), чтобы они "выезжали" из-под неё.
+                     // И плюс небольшой отступ.
+                     
+                     const offsetFromActive = 500 - cardCollapsedHeight + 10; // 10px зазор
+                     card.style.transform = `translateY(${offsetFromActive}px)`;
+                 }
+             });
+         };
+         
+         // Обработчик клика
          cards.forEach(card => {
              card.addEventListener('click', function (e) {
                  e.stopPropagation();
-                 
-                 // Если уже активна - ничего не делаем
                  if (this.classList.contains('is-active')) return;
                  
-                 // Убираем активность со всех карточек
                  cards.forEach(c => c.classList.remove('is-active'));
-                 
-                 // Делаем текущую активной
                  this.classList.add('is-active');
                  
-                 // Прокручиваем к карточке, чтобы она встала под шапку
+                 // Пересчитываем позиции сразу после клика
+                 updatePositions();
+                 
+                 // Плавный скролл к активной карточке
                  const yOffset = -headerHeight;
                  const y = this.getBoundingClientRect().top + window.pageYOffset + yOffset;
                  window.scrollTo({ top: y, behavior: 'smooth' });
              });
          });
          
-         // 3. Функция для анимации при скролле (эффект "колоды")
-         const updateCards = () => {
-             // Работает только если есть активная карточка
-             const activeCard = document.querySelector('.tour-card.is-active');
-             if (!activeCard) return;
-             
-             const activeRect = activeCard.getBoundingClientRect();
-             const activeTop = activeRect.top; // Позиция активной карточки относительно экрана
-             
-             cards.forEach((card, index) => {
-                 if (card === activeCard) {
-                     // Активная карточка всегда на месте без трансформации
-                     card.style.transform = 'none';
-                     return;
-                 }
-                 
-                 // Для карточек, которые ВЫШЕ активной (уже проскроллены)
-                 if (index < Array.from(cards).indexOf(activeCard)) {
-                     // Чем дальше карточка вверх, тем сильнее она сдвигается вверх
-                     // Когда активная карточка находится под шапкой, верхние карточки собираются в колоду
-                     const offset = Math.max(0, activeTop - headerHeight);
-                     
-                     // Сдвигаем карточку вверх, чтобы она наезжала на предыдущую
-                     // Рассчитываем насколько сильно сдвинуть (чтобы виден был только заголовок)
-                     const shift = Math.max(0, (offset / 100) * (72 - 24));
-                     card.style.transform = `translateY(-${shift}px)`;
-                 }
-                 // Для карточек, которые НИЖЕ активной
-                 else {
-                     // Они просто остаются на месте, пока активная не проскроллится
-                     card.style.transform = 'none';
-                 }
-             });
-         };
+         // Слушаем скролл для тонкой настройки (опционально, сейчас updatePositions справляется)
+         // window.addEventListener('scroll', updatePositions);
          
-         // Навешиваем слушатель на скролл
-         window.addEventListener('scroll', updateCards);
+         // Инициализация
+         updatePositions();
          
-         // Вызываем один раз при инициализации
-         updateCards();
+         // Пересчет при ресайзе
+         window.addEventListener('resize', updatePositions);
      }
     });

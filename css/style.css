@@ -1272,29 +1272,37 @@ a.contact-detail__text:hover {
     .tours__grid {
         display: flex;
         flex-direction: column;
+        /* Добавляем отступ сверху, равный высоте шапки + небольшой зазор */
+        padding-top: 90px; 
         padding-bottom: 100px;
         gap: 0;
         position: relative;
+        min-height: 100vh; /* Чтобы было куда скроллить */
     }
     
     .tour-card {
-        /* Используем sticky для эффекта колоды */
-        position: sticky;
-        top: 80px; /* Отступ от шапки */
+        /* Убираем sticky, используем absolute для наложения */
+        position: absolute;
+        top: 90px; /* Начальная позиция под шапкой */
+        left: 0;
+        right: 0;
+        width: 100%;
         height: 72px; /* Высота свернутой карточки */
-        margin-bottom: 0; /* Убираем отступы, JS будет сдвигать их */
-        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.1s linear;
-        /* Плавная высота, быстрый transform */
+        margin: 0;
+        /* Плавная анимация высоты и теней */
+        transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                    box-shadow 0.3s ease, 
+                    border-radius 0.3s ease;
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
         background: #fff;
+        /* Тень только снизу, чтобы подчеркнуть слои */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         z-index: 1;
-        /* Чтобы карточки не выходили за пределы контейнера при сдвиге */
-        transform-origin: top center;
+        will-change: transform, height; /* Оптимизация производительности */
     }
     
-    /* Наращиваем z-index для каждой карточки */
+    /* Наращиваем z-index для каждой карточки, чтобы нижние были выше верхних при наложении */
     .tour-card:nth-child(1) { z-index: 1; }
     .tour-card:nth-child(2) { z-index: 2; }
     .tour-card:nth-child(3) { z-index: 3; }
@@ -1306,9 +1314,10 @@ a.contact-detail__text:hover {
     
     /* Раскрытая карточка */
     .tour-card.is-active {
-        height: 500px;
-        z-index: 100;
-        margin-bottom: 20px; /* Отступ для раскрытой карточки */
+        height: 500px; /* Полная высота */
+        z-index: 100; /* Всегда поверх всех */
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        border-radius: 20px;
     }
     
     /* Скрываем контент в свернутом виде */
@@ -1329,16 +1338,16 @@ a.contact-detail__text:hover {
         transition-delay: 0.1s;
     }
     
-    /* Заголовок свернутой карточки */
+    /* Заголовок свернутой карточки (всегда виден) */
     .tour-card__header {
-        padding: 0 20px;
+        padding: 0 24px;
         height: 72px;
         display: flex;
         align-items: center;
         background: #fff;
         position: relative;
         z-index: 20;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        /* Убираем границу, тень карточки сделает разделение */
     }
     
     .tour-card__title {
@@ -1354,19 +1363,20 @@ a.contact-detail__text:hover {
     /* Заголовок раскрытой карточки */
     .tour-card.is-active .tour-card__header {
         background: transparent;
-        border-bottom: none;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         height: auto;
         padding: 24px;
+        z-index: 30;
     }
     
     .tour-card.is-active .tour-card__title {
         color: #fff;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         white-space: normal;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     
     /* Картинка и контент */
@@ -1383,9 +1393,10 @@ a.contact-detail__text:hover {
         bottom: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 50%, transparent 100%);
         padding: 24px;
         color: #fff;
+        z-index: 25;
     }
 }
 
