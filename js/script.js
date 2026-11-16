@@ -423,43 +423,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ============ 11. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
     function initStackingCards() {
+        const cards = document.querySelectorAll('.tour-card');
+
+        // Сбрасываем все классы активности при новой инициализации (например, при смене фильтра)
+        cards.forEach(c => c.classList.remove('is-active'));
+
         if (window.innerWidth > 768) return;
 
-        const cards = document.querySelectorAll('.tour-card');
-        if (cards.length === 0) return;
-
-        // Создаем наблюдатель за появлением карточек в зоне видимости
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // Если карточка пересекает центр экрана (примерно)
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-active');
-                } else {
-                    entry.target.classList.remove('is-active');
-                }
-            });
-        }, {
-            // Карточка считается активной, если она пересекает 50% высоты экрана
-            rootMargin: '-40% 0px -40% 0px',
-            threshold: 0
-        });
-
         cards.forEach(card => {
-            observer.observe(card);
-            // По клику тоже делаем активной (на случай если скролл не сработал)
-            card.addEventListener('click', () => {
+            // По клику раскрываем карточку и сворачиваем остальные
+            card.addEventListener('click', function (e) {
+                // Предотвращаем всплытие, чтобы клик не срабатывал на вложенных элементах
+                e.stopPropagation();
+
+                const isAlreadyActive = this.classList.contains('is-active');
+
+                // Сворачиваем все карточки
                 cards.forEach(c => c.classList.remove('is-active'));
-                card.classList.add('is-active');
+
+                // Если карточка не была активна, делаем её активной
+                if (!isAlreadyActive) {
+                    this.classList.add('is-active');
+                }
             });
         });
     }
 
-    // Перезапуск при ресайзе (если пользователь меняет ориентацию)
+    // Обновляем инициализацию после рендера туров
+    // (В функции renderTours после grid.innerHTML = ...)
+    // Убедитесь, что там вызывается initStackingCards();
+
+    // Инициализация при первой загрузке
+    if (window.innerWidth <= 768) {
+        initStackingCards();
+    }
+
+    // Перезапуск при изменении размера окна
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
+            // Сбрасываем стили, если вернулись на десктоп
             document.querySelectorAll('.tour-card').forEach(card => {
                 card.classList.remove('is-active');
-                card.style = ''; // сбрасываем инлайн-стили
             });
         } else {
             initStackingCards();

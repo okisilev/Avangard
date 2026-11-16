@@ -1395,25 +1395,31 @@ a.contact-detail__text:hover {
 
     .tour-card {
         position: sticky;
-        top: 80px; /* Отступ от верха (учитываем шапку) */
-        height: 120px; /* Высота свернутой карточки (виден только заголовок) */
-        margin-bottom: 16px; /* Расстояние между карточками в стеке */
-        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                    margin 0.4s ease;
+        top: 80px; /* Базовый отступ от верха */
+        height: 72px; /* Высота свернутой карточки (виден только заголовок) */
+        margin-bottom: 0; 
+        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
-        background: #1A1B1E; /* Темный фон для неактивных */
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
+        background: #fff; /* Светлый фон для свернутых карточек */
+        z-index: 1;
+    }
+
+    /* Плавное появление границ между карточками */
+    .tour-card:not(:last-child) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     /* Активная карточка (раскрытая) */
     .tour-card.is-active {
-        height: 550px; /* Полная высота */
-        background: #fff;
+        height: 520px; /* Полная высота */
         z-index: 10;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     }
 
-    /* Наезжание карточек друг на друга */
+    /* Смещение для создания эффекта стопки */
+    .tour-card:nth-child(1) { top: 80px; }
     .tour-card:nth-child(2) { top: 90px; }
     .tour-card:nth-child(3) { top: 100px; }
     .tour-card:nth-child(4) { top: 110px; }
@@ -1422,57 +1428,82 @@ a.contact-detail__text:hover {
     .tour-card:nth-child(7) { top: 140px; }
     .tour-card:nth-child(8) { top: 150px; }
 
-    /* Скрываем лишний контент в неактивных карточках */
+    /* Скрываем картинку и оверлей в свернутом состоянии */
+    .tour-card .tour-card__img,
+    .tour-card .tour-card__overlay,
     .tour-card .tour-card__body {
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    
-    .tour-card .tour-card__overlay {
-        background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
-    }
 
     /* В активной карточке показываем всё */
+    .tour-card.is-active .tour-card__img,
+    .tour-card.is-active .tour-card__overlay,
     .tour-card.is-active .tour-card__body {
         opacity: 1;
         visibility: visible;
         transition-delay: 0.1s;
     }
 
-    .tour-card.is-active .tour-card__overlay {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.8) 100%);
-    }
-
-    /* Позиционирование заголовка */
+    /* Заголовок свернутой карточки */
     .tour-card__header {
-        padding: 20px;
+        padding: 0 20px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        background: #fff; /* Фон заголовка */
+        position: relative;
+        z-index: 20;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
         transition: all 0.3s ease;
     }
 
     .tour-card__title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        color: var(--color-text-main); /* Темный текст на светлом фоне */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    /* Заголовок активной карточки */
+    .tour-card.is-active .tour-card__header {
+        background: transparent; /* Прозрачный фон, чтобы была видна картинка */
+        border-bottom: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: auto;
+        padding: 24px;
     }
 
     .tour-card.is-active .tour-card__title {
-        font-size: 1.6rem;
+        color: #fff;
+        font-size: 1.4rem;
         white-space: normal;
     }
 
-    /* Адаптация изображения */
+    /* Позиционирование картинки (заполняет всю карточку) */
     .tour-card__img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    
-    /* Убираем hover-эффект на мобильных */
-    .tour-card:hover {
-        transform: none;
-    }
-    .tour-card:hover .tour-card__img {
-        transform: none;
+
+    /* Позиционирование тела карточки (цена, даты) */
+    .tour-card__body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        padding: 24px;
+        color: #fff;
     }
 }
