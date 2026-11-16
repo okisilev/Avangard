@@ -302,7 +302,6 @@ button {
     from {
         transform: scale(1);
     }
-
     to {
         transform: scale(1.08);
     }
@@ -365,13 +364,11 @@ button {
 }
 
 @keyframes scrollLine {
-
     0%,
     100% {
         transform: scaleY(0.4);
         transform-origin: top;
     }
-
     50% {
         transform: scaleY(1);
         transform-origin: top;
@@ -1053,7 +1050,7 @@ a.contact-detail__text:hover {
     transition: all 0.2s;
 }
 
-.messenger-radio input:checked+.messenger-radio__box {
+.messenger-radio input:checked + .messenger-radio__box {
     background: rgba(255, 255, 255, 0.15);
     border-color: #fff;
 }
@@ -1090,12 +1087,12 @@ a.contact-detail__text:hover {
     transition: all 0.2s;
 }
 
-.modal-agreement input:checked+.modal-agreement__box {
+.modal-agreement input:checked + .modal-agreement__box {
     background: #fff;
     border-color: #fff;
 }
 
-.modal-agreement input:checked+.modal-agreement__box::after {
+.modal-agreement input:checked + .modal-agreement__box::after {
     content: '';
     position: absolute;
     left: 6px;
@@ -1164,15 +1161,15 @@ a.contact-detail__text:hover {
     .header__logo {
         font-size: 1.3rem;
     }
-
+    
     .contact-widget__pill {
         display: none;
     }
-
+    
     .footer__container {
         grid-template-columns: 1fr 1fr;
     }
-
+    
     .footer__rates {
         border-left: none;
         padding-left: 0;
@@ -1184,7 +1181,7 @@ a.contact-detail__text:hover {
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         padding-top: 20px;
     }
-
+    
     .footer__rates-title {
         width: 100%;
         margin-bottom: 0;
@@ -1196,7 +1193,7 @@ a.contact-detail__text:hover {
         grid-template-columns: 1fr;
         gap: 40px;
     }
-
+    
     .contact__details {
         margin-top: 30px;
     }
@@ -1206,15 +1203,15 @@ a.contact-detail__text:hover {
     .modal__grid {
         grid-template-columns: 1fr;
     }
-
+    
     .modal__image {
         display: none;
     }
-
+    
     .modal__content {
         padding: 32px 24px;
     }
-
+    
     .modal__title {
         font-size: 1.6rem;
     }
@@ -1224,40 +1221,40 @@ a.contact-detail__text:hover {
     .section {
         padding: 70px 0;
     }
-
+    
     .btn--white {
         padding: 10px 16px;
         font-size: 0.85rem;
     }
-
+    
     .btn--white svg {
         display: none;
     }
-
+    
     .header__logo {
         font-size: 1.1rem;
     }
-
+    
     .hero__actions {
         flex-direction: column;
         align-items: center;
     }
-
+    
     .btn--large {
         width: 100%;
         max-width: 320px;
     }
-
+    
     .footer__container {
         grid-template-columns: 1fr;
     }
-
+    
     .footer__copy {
         flex-direction: column;
         text-align: center;
         gap: 12px;
     }
-
+    
     .footer__copy-left,
     .footer__copy-center,
     .footer__copy-right {
@@ -1265,12 +1262,12 @@ a.contact-detail__text:hover {
         justify-content: center;
         width: 100%;
     }
-
+    
     .footer__copy-center {
         flex-direction: column;
         gap: 8px;
     }
-
+    
     /* ============ КОЛОДА С АНИМАЦИЕЙ (ИСПРАВЛЕННАЯ) ============ */
     .tours__grid {
         display: flex;
@@ -1279,16 +1276,13 @@ a.contact-detail__text:hover {
         gap: 0;
         position: relative;
     }
-
+    
     .tour-card {
         /* Используем sticky для эффекта колоды */
         position: sticky;
-        top: 80px;
-        /* Отступ от шапки */
-        height: 72px;
-        /* Высота свернутой карточки */
-        margin-bottom: 0;
-        /* Убираем отступы, JS будет сдвигать их */
+        top: 80px; /* Отступ от шапки */
+        height: 72px; /* Высота свернутой карточки */
+        margin-bottom: 0; /* Убираем отступы, JS будет сдвигать их */
         transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.1s linear;
         /* Плавная высота, быстрый transform */
         border-radius: 16px;
@@ -1299,48 +1293,24 @@ a.contact-detail__text:hover {
         /* Чтобы карточки не выходили за пределы контейнера при сдвиге */
         transform-origin: top center;
     }
-
+    
     /* Наращиваем z-index для каждой карточки */
-    .tour-card:nth-child(1) {
-        z-index: 1;
-    }
-
-    .tour-card:nth-child(2) {
-        z-index: 2;
-    }
-
-    .tour-card:nth-child(3) {
-        z-index: 3;
-    }
-
-    .tour-card:nth-child(4) {
-        z-index: 4;
-    }
-
-    .tour-card:nth-child(5) {
-        z-index: 5;
-    }
-
-    .tour-card:nth-child(6) {
-        z-index: 6;
-    }
-
-    .tour-card:nth-child(7) {
-        z-index: 7;
-    }
-
-    .tour-card:nth-child(8) {
-        z-index: 8;
-    }
-
+    .tour-card:nth-child(1) { z-index: 1; }
+    .tour-card:nth-child(2) { z-index: 2; }
+    .tour-card:nth-child(3) { z-index: 3; }
+    .tour-card:nth-child(4) { z-index: 4; }
+    .tour-card:nth-child(5) { z-index: 5; }
+    .tour-card:nth-child(6) { z-index: 6; }
+    .tour-card:nth-child(7) { z-index: 7; }
+    .tour-card:nth-child(8) { z-index: 8; }
+    
     /* Раскрытая карточка */
     .tour-card.is-active {
         height: 500px;
         z-index: 100;
-        margin-bottom: 20px;
-        /* Отступ для раскрытой карточки */
+        margin-bottom: 20px; /* Отступ для раскрытой карточки */
     }
-
+    
     /* Скрываем контент в свернутом виде */
     .tour-card .tour-card__img,
     .tour-card .tour-card__overlay,
@@ -1349,7 +1319,7 @@ a.contact-detail__text:hover {
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-
+    
     /* Показываем контент в раскрытом виде */
     .tour-card.is-active .tour-card__img,
     .tour-card.is-active .tour-card__overlay,
@@ -1358,7 +1328,7 @@ a.contact-detail__text:hover {
         visibility: visible;
         transition-delay: 0.1s;
     }
-
+    
     /* Заголовок свернутой карточки */
     .tour-card__header {
         padding: 0 20px;
@@ -1370,7 +1340,7 @@ a.contact-detail__text:hover {
         z-index: 20;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
-
+    
     .tour-card__title {
         font-size: 1.1rem;
         color: var(--color-text-main);
@@ -1380,7 +1350,7 @@ a.contact-detail__text:hover {
         font-weight: 600;
         margin: 0;
     }
-
+    
     /* Заголовок раскрытой карточки */
     .tour-card.is-active .tour-card__header {
         background: transparent;
@@ -1392,13 +1362,13 @@ a.contact-detail__text:hover {
         height: auto;
         padding: 24px;
     }
-
+    
     .tour-card.is-active .tour-card__title {
         color: #fff;
         font-size: 1.4rem;
         white-space: normal;
     }
-
+    
     /* Картинка и контент */
     .tour-card__img {
         position: absolute;
@@ -1407,7 +1377,7 @@ a.contact-detail__text:hover {
         height: 100%;
         object-fit: cover;
     }
-
+    
     .tour-card__body {
         position: absolute;
         bottom: 0;
