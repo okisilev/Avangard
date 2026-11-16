@@ -1221,3 +1221,258 @@ a.contact-detail__text:hover {
 .legal-content strong {
     font-weight: 600;
 }
+
+/* ============ СЕКЦИЯ ТУРОВ (НОВЫЙ ДИЗАЙН) ============ */
+.section-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-dusty-blue);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* Фильтры */
+.tours-filters {
+    display: flex;
+    background: #F4F5F7;
+    border-radius: 12px;
+    padding: 6px;
+    margin-bottom: 32px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filter-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    transition: all 0.3s ease;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background: #fff;
+    color: var(--color-text-main);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+}
+
+/* Сетка карточек (Десктоп) */
+.tours__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 28px;
+}
+
+/* Карточка тура */
+.tour-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 500px;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tour-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+}
+
+.tour-card__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    z-index: 1;
+}
+
+.tour-card:hover .tour-card__img {
+    transform: scale(1.08);
+}
+
+.tour-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.1) 40%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+    z-index: 2;
+}
+
+/* Заголовок (в верхней части) */
+.tour-card__header {
+    position: relative;
+    z-index: 3;
+    padding: 24px;
+    color: #fff;
+}
+
+.tour-card__title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Основной контент (в нижней части) */
+.tour-card__body {
+    position: relative;
+    z-index: 3;
+    padding: 24px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tour-card__meta {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.tour-card__price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.tour-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 16px;
+}
+
+.tour-card__badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--color-burgundy);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tour-card__spots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+/* ============ МОБИЛЬНЫЙ СТЕК (ЭФФЕКТ "КОЛОДЫ") ============ */
+@media (max-width: 768px) {
+    .tours__grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding-bottom: 50px;
+        position: relative;
+    }
+
+    .tour-card {
+        position: sticky;
+        top: 80px; /* Отступ от верха (учитываем шапку) */
+        height: 120px; /* Высота свернутой карточки (виден только заголовок) */
+        margin-bottom: 16px; /* Расстояние между карточками в стеке */
+        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                    margin 0.4s ease;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+        background: #1A1B1E; /* Темный фон для неактивных */
+    }
+
+    /* Активная карточка (раскрытая) */
+    .tour-card.is-active {
+        height: 550px; /* Полная высота */
+        background: #fff;
+        z-index: 10;
+    }
+
+    /* Наезжание карточек друг на друга */
+    .tour-card:nth-child(2) { top: 90px; }
+    .tour-card:nth-child(3) { top: 100px; }
+    .tour-card:nth-child(4) { top: 110px; }
+    .tour-card:nth-child(5) { top: 120px; }
+    .tour-card:nth-child(6) { top: 130px; }
+    .tour-card:nth-child(7) { top: 140px; }
+    .tour-card:nth-child(8) { top: 150px; }
+
+    /* Скрываем лишний контент в неактивных карточках */
+    .tour-card .tour-card__body {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .tour-card .tour-card__overlay {
+        background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+    }
+
+    /* В активной карточке показываем всё */
+    .tour-card.is-active .tour-card__body {
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0.1s;
+    }
+
+    .tour-card.is-active .tour-card__overlay {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.8) 100%);
+    }
+
+    /* Позиционирование заголовка */
+    .tour-card__header {
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .tour-card__title {
+        font-size: 1.2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .tour-card.is-active .tour-card__title {
+        font-size: 1.6rem;
+        white-space: normal;
+    }
+
+    /* Адаптация изображения */
+    .tour-card__img {
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* Убираем hover-эффект на мобильных */
+    .tour-card:hover {
+        transform: none;
+    }
+    .tour-card:hover .tour-card__img {
+        transform: none;
+    }
+}

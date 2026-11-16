@@ -1,31 +1,144 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ============ 1. КАТАЛОГ ТУРОВ (рендер из массива) ============ */
+    /* ============ 1. КАТАЛОГ ТУРОВ ============ */
     const tours = [
-        { title: 'Мадагаскар', dates: '26 ноября — 02 декабря 2026', days: '7 дней', img: 'https://picsum.photos/id/1018/600/800', badge: 'NEW' },
-        { title: 'Альпы на суперкарах', dates: '26 — 30 января 2027', days: '5 дней', img: 'https://picsum.photos/id/1036/600/800', badge: '' },
-        { title: 'Патагония', dates: '17 — 25 февраля 2027', days: '9 дней', img: 'https://picsum.photos/id/1039/600/800', badge: '' },
-        { title: 'Байкал', dates: '24 — 28 февраля 2027', days: '5 дней', img: 'https://picsum.photos/id/1043/600/800', badge: '' },
-        { title: 'Япония', dates: '19 — 26 апреля 2027', days: '8 дней', img: 'https://picsum.photos/id/1040/600/800', badge: '' },
-        { title: 'Исландия', dates: '10 — 17 августа 2027', days: '8 дней', img: 'https://picsum.photos/id/1044/600/800', badge: '' },
-        { title: 'Камчатка', dates: '05 — 11 сентября 2027', days: '7 дней', img: 'https://picsum.photos/id/1050/600/800', badge: '' },
-        { title: 'Антарктида 2028', dates: '12 — 22 февраля 2028', days: '11 дней', img: 'https://picsum.photos/id/1051/600/800', badge: 'ХИТ' }
+        {
+            title: 'Мадагаскар',
+            dates: '26 ноября — 02 декабря 2026',
+            days: '7 дней',
+            price: 'от 450 000 ₽',
+            spots: 12,
+            type: 'group',
+            img: 'https://picsum.photos/id/1018/600/800',
+            badge: 'NEW'
+        },
+        {
+            title: 'Альпы на суперкарах',
+            dates: '26 — 30 января 2027',
+            days: '5 дней',
+            price: 'от 600 000 ₽',
+            spots: 8,
+            type: 'group',
+            img: 'https://picsum.photos/id/1036/600/800',
+            badge: ''
+        },
+        {
+            title: 'Антарктида 2027',
+            dates: '12 — 22 февраля 2027',
+            days: '11 дней',
+            price: 'от 1 500 000 ₽',
+            spots: 15,
+            type: 'group',
+            img: 'https://picsum.photos/id/1039/600/800',
+            badge: 'ХИТ'
+        },
+        {
+            title: 'Патагония: Аргентина и Чили',
+            dates: '17 — 25 февраля 2027',
+            days: '9 дней',
+            price: 'от 800 000 ₽',
+            spots: 10,
+            type: 'group',
+            img: 'https://picsum.photos/id/1043/600/800',
+            badge: ''
+        },
+        {
+            title: 'Байкал',
+            dates: '24 — 28 февраля 2027',
+            days: '5 дней',
+            price: 'от 250 000 ₽',
+            spots: 14,
+            type: 'group',
+            img: 'https://picsum.photos/id/1040/600/800',
+            badge: ''
+        },
+        {
+            title: 'Япония',
+            dates: '19 — 26 апреля 2027',
+            days: '8 дней',
+            price: 'от 2 032 000 ₽',
+            spots: 18,
+            type: 'individual',
+            img: 'https://picsum.photos/id/1044/600/800',
+            badge: ''
+        },
+        {
+            title: 'Исландия',
+            dates: '10 — 17 августа 2027',
+            days: '8 дней',
+            price: 'от 550 000 ₽',
+            spots: 12,
+            type: 'individual',
+            img: 'https://picsum.photos/id/1050/600/800',
+            badge: ''
+        },
+        {
+            title: 'Камчатка',
+            dates: '05 — 11 сентября 2027',
+            days: '7 дней',
+            price: 'от 350 000 ₽',
+            spots: 10,
+            type: 'individual',
+            img: 'https://picsum.photos/id/1051/600/800',
+            badge: ''
+        }
     ];
 
     const grid = document.getElementById('toursGrid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    function renderTours(filter = 'group') {
+        if (!grid) return;
+
+        // Фильтруем туры
+        const filteredTours = tours.filter(t => t.type === filter);
+
+        grid.innerHTML = filteredTours.map(t => `
+                <article class="tour-card">
+                    <img src="${t.img}" alt="${t.title}" class="tour-card__img" loading="lazy">
+                    <div class="tour-card__overlay"></div>
+                    
+                    <!-- Заголовок (виден всегда, даже в стеке) -->
+                    <div class="tour-card__header">
+                        <h3 class="tour-card__title">${t.title}</h3>
+                    </div>
+    
+                    <!-- Контент (скрыт в неактивных карточках) -->
+                    <div class="tour-card__body">
+                        <div class="tour-card__meta">${t.dates} • ${t.days}</div>
+                        <div class="tour-card__price">${t.price}</div>
+                        
+                        <div class="tour-card__footer">
+                            ${t.badge ? `<span class="tour-card__badge">${t.badge}</span>` : '<span></span>'}
+                            <div class="tour-card__spots">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                ${t.spots} мест
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+        // После рендера применяем логику стека (только на мобильных)
+        if (window.innerWidth <= 768) {
+            initStackingCards();
+        }
+    }
+
+    // Обработка кликов по фильтрам
+    if (filterBtns.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderTours(btn.dataset.filter);
+            });
+        });
+    }
+
+    // Инициализация при загрузке
     if (grid) {
-        grid.innerHTML = tours.map(t => `
-            <article class="tour-card">
-                <img src="${t.img}" alt="${t.title}" class="tour-card__img" loading="lazy">
-                <div class="tour-card__overlay"></div>
-                <div class="tour-card__content">
-                    <h3 class="tour-card__title">${t.title}</h3>
-                    <div class="tour-card__meta">${t.dates}</div>
-                    <div class="tour-card__meta">${t.days}</div>
-                    ${t.badge ? `<span class="tour-card__badge">${t.badge}</span>` : ''}
-                </div>
-            </article>
-        `).join('');
+        renderTours('group');
     }
 
     /* ============ 2. ШАПКА ПРИ СКРОЛЛЕ ============ */
@@ -306,6 +419,51 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         initStackingCards();
+    });
+
+    /* ============ 11. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
+    function initStackingCards() {
+        if (window.innerWidth > 768) return;
+
+        const cards = document.querySelectorAll('.tour-card');
+        if (cards.length === 0) return;
+
+        // Создаем наблюдатель за появлением карточек в зоне видимости
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Если карточка пересекает центр экрана (примерно)
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-active');
+                } else {
+                    entry.target.classList.remove('is-active');
+                }
+            });
+        }, {
+            // Карточка считается активной, если она пересекает 50% высоты экрана
+            rootMargin: '-40% 0px -40% 0px',
+            threshold: 0
+        });
+
+        cards.forEach(card => {
+            observer.observe(card);
+            // По клику тоже делаем активной (на случай если скролл не сработал)
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('is-active'));
+                card.classList.add('is-active');
+            });
+        });
+    }
+
+    // Перезапуск при ресайзе (если пользователь меняет ориентацию)
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            document.querySelectorAll('.tour-card').forEach(card => {
+                card.classList.remove('is-active');
+                card.style = ''; // сбрасываем инлайн-стили
+            });
+        } else {
+            initStackingCards();
+        }
     });
 
 });
