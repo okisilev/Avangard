@@ -1271,29 +1271,31 @@ a.contact-detail__text:hover {
         gap: 8px;
     }
 
-    /* ============ МОБИЛЬНЫЙ СТЕК (ИДЕАЛЬНАЯ КОЛОДА) ============ */
+    /* ============ ИДЕАЛЬНАЯ КОЛОДА (STICKY STACKING) ============ */
 
     .tours__grid {
         display: flex;
         flex-direction: column;
         padding-bottom: 100px;
-        /* Даем место для скролла */
+        /* Место для скролла */
         gap: 0;
+        /* Изолируем контекст наложения, чтобы карточки не наезжали на шапку */
+        position: relative;
+        z-index: 1;
     }
 
     .tour-card {
-        /* СТИКИ: заставляет карточку прилипать к верху */
         position: sticky;
+        /* Каждая следующая карточка будет иметь свой top (см. nth-child ниже) */
         top: 80px;
-        /* Отступ от верха, чтобы не перекрывать шапку */
 
-        /* Высота свернутой карточки (только заголовок) */
         height: 72px;
+        /* Высота свернутой карточки */
 
-        /* КРИТИЧЕСКИ ВАЖНО: Отрицательный отступ, чтобы они наезжали */
+        /* Отрицательный отступ, чтобы карточки наезжали друг на друга */
         margin-bottom: -24px;
 
-        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s ease, box-shadow 0.3s ease;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
@@ -1304,34 +1306,42 @@ a.contact-detail__text:hover {
     /* Наращиваем z-index, чтобы нижние карточки перекрывали верхние */
     .tour-card:nth-child(1) {
         z-index: 1;
+        top: 80px;
     }
 
     .tour-card:nth-child(2) {
         z-index: 2;
+        top: 104px;
     }
 
     .tour-card:nth-child(3) {
         z-index: 3;
+        top: 128px;
     }
 
     .tour-card:nth-child(4) {
         z-index: 4;
+        top: 152px;
     }
 
     .tour-card:nth-child(5) {
         z-index: 5;
+        top: 176px;
     }
 
     .tour-card:nth-child(6) {
         z-index: 6;
+        top: 200px;
     }
 
     .tour-card:nth-child(7) {
         z-index: 7;
+        top: 224px;
     }
 
     .tour-card:nth-child(8) {
         z-index: 8;
+        top: 248px;
     }
 
     /* Раскрытая карточка */
@@ -1339,7 +1349,6 @@ a.contact-detail__text:hover {
         height: 500px;
         z-index: 100;
         margin-bottom: 20px;
-        /* Отступ после раскрытой карточки */
     }
 
     /* Скрываем контент в свернутом виде */
