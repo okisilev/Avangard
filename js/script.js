@@ -370,34 +370,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ============ 10. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
-    function initStackingCards() {
-        if (window.innerWidth > 768) return;
-
-        const cards = document.querySelectorAll('.tour-card');
-        if (cards.length === 0) return;
-
-        // Сбрасываем активные классы
-        cards.forEach(c => c.classList.remove('is-active'));
-
-        // Делаем первую карточку активной по умолчанию (чтобы колода выглядела собранной)
-        cards[0].classList.add('is-active');
-
-        // Вешаем обработчик клика на каждую карточку
-        cards.forEach(card => {
-            card.addEventListener('click', function (e) {
-                // Если она уже активна, ничего не делаем
-                if (this.classList.contains('is-active')) return;
-
-                e.stopPropagation();
-
-                // Сворачиваем все
-                cards.forEach(c => c.classList.remove('is-active'));
-
-                // Раскрываем выбранную
-                this.classList.add('is-active');
+        /* ============ 10. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
+        function initStackingCards() {
+            if (window.innerWidth > 768) return;
+    
+            const cards = document.querySelectorAll('.tour-card');
+            if (cards.length === 0) return;
+    
+            // 1. Сбрасываем все классы активности
+            cards.forEach(c => c.classList.remove('is-active'));
+    
+            // 2. Настраиваем IntersectionObserver, который будет раскрывать карточку при скролле
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Если карточка пересекает верхнюю границу экрана (или находится в зоне видимости)
+                    if (entry.isIntersecting) {
+                        // Убираем активность у всех
+                        cards.forEach(c => c.classList.remove('is-active'));
+                        // Делаем активной ту, которая попала в зону видимости
+                        entry.target.classList.add('is-active');
+                    }
+                });
+            }, {
+                // Настраиваем зону срабатывания: 
+                // Карточка считается активной, если она пересекает верхнюю часть экрана (например, 10% от верха)
+                rootMargin: '0px 0px -80% 0px', 
+                threshold: 0
             });
-        });
-    }
+    
+            cards.forEach(card => {
+                observer.observe(card);
+    
+                // Добавляем обработчик клика на случай, если пользователь не скроллит, а просто кликает
+                card.addEventListener('click', function() {
+                    cards.forEach(c => c.classList.remove('is-active'));
+                    this.classList.add('is-active');
+                    
+                    // Плавно скроллим к карточке, чтобы она встала под шапку
+                    const yOffset = -80; // Отступ под шапку
+                    const y = this.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                });
+            });
+        }
 
 });
