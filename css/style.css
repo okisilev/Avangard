@@ -1224,40 +1224,32 @@ a.contact-detail__text:hover {
     .section {
         padding: 70px 0;
     }
-
     .btn--white {
         padding: 10px 16px;
         font-size: 0.85rem;
     }
-
     .btn--white svg {
         display: none;
     }
-
     .header__logo {
         font-size: 1.1rem;
     }
-
     .hero__actions {
         flex-direction: column;
         align-items: center;
     }
-
     .btn--large {
         width: 100%;
         max-width: 320px;
     }
-
     .footer__container {
         grid-template-columns: 1fr;
     }
-
     .footer__copy {
         flex-direction: column;
         text-align: center;
         gap: 12px;
     }
-
     .footer__copy-left,
     .footer__copy-center,
     .footer__copy-right {
@@ -1265,84 +1257,50 @@ a.contact-detail__text:hover {
         justify-content: center;
         width: 100%;
     }
-
     .footer__copy-center {
         flex-direction: column;
         gap: 8px;
     }
 
-    /* ============ ИДЕАЛЬНАЯ КОЛОДА (STICKY STACKING) ============ */
-
+    /* ============ ИДЕАЛЬНАЯ КОЛОДА ============ */
+    
     .tours__grid {
         display: flex;
         flex-direction: column;
         padding-bottom: 100px;
-        /* Место для скролла */
         gap: 0;
-        /* Изолируем контекст наложения, чтобы карточки не наезжали на шапку */
-        position: relative;
-        z-index: 1;
     }
 
     .tour-card {
+        /* Карточки прилипают к верху */
         position: sticky;
-        /* Каждая следующая карточка будет иметь свой top (см. nth-child ниже) */
-        top: 80px;
-
-        height: 72px;
+        top: 80px; 
+        
         /* Высота свернутой карточки */
-
-        /* Отрицательный отступ, чтобы карточки наезжали друг на друга */
-        margin-bottom: -24px;
-
+        height: 72px; 
+        
+        /* Отрицательный отступ, чтобы наезжали друг на друга */
+        margin-bottom: -24px; 
+        
         transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s ease, box-shadow 0.3s ease;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
         background: #fff;
-        z-index: 1;
+        
+        /* Базовый z-index */
+        z-index: 1; 
     }
 
-    /* Наращиваем z-index, чтобы нижние карточки перекрывали верхние */
-    .tour-card:nth-child(1) {
-        z-index: 1;
-        top: 80px;
-    }
-
-    .tour-card:nth-child(2) {
-        z-index: 2;
-        top: 104px;
-    }
-
-    .tour-card:nth-child(3) {
-        z-index: 3;
-        top: 128px;
-    }
-
-    .tour-card:nth-child(4) {
-        z-index: 4;
-        top: 152px;
-    }
-
-    .tour-card:nth-child(5) {
-        z-index: 5;
-        top: 176px;
-    }
-
-    .tour-card:nth-child(6) {
-        z-index: 6;
-        top: 200px;
-    }
-
-    .tour-card:nth-child(7) {
-        z-index: 7;
-        top: 224px;
-    }
-
-    .tour-card:nth-child(8) {
-        z-index: 8;
-        top: 248px;
-    }
+    /* КАЖДАЯ СЛЕДУЮЩАЯ КАРТОЧКА ВЫШЕ ПРЕДЫДУЩЕЙ */
+    .tour-card:nth-child(1) { z-index: 1; }
+    .tour-card:nth-child(2) { z-index: 2; }
+    .tour-card:nth-child(3) { z-index: 3; }
+    .tour-card:nth-child(4) { z-index: 4; }
+    .tour-card:nth-child(5) { z-index: 5; }
+    .tour-card:nth-child(6) { z-index: 6; }
+    .tour-card:nth-child(7) { z-index: 7; }
+    .tour-card:nth-child(8) { z-index: 8; }
 
     /* Раскрытая карточка */
     .tour-card.is-active {
@@ -1417,7 +1375,6 @@ a.contact-detail__text:hover {
         height: 100%;
         object-fit: cover;
     }
-
     .tour-card__body {
         position: absolute;
         bottom: 0;
