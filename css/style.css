@@ -1181,6 +1181,7 @@ a.contact-detail__text:hover {
 }
 
 @media (max-width: 768px) {
+    /* ... остальные стили (шапка, футер и т.д.) остаются без изменений ... */
     .section {
         padding: 70px 0;
     }
@@ -1226,41 +1227,51 @@ a.contact-detail__text:hover {
     .tours__grid {
         display: flex;
         flex-direction: column;
-        padding-bottom: 50px;
+        padding-bottom: 100px; /* Добавляем отступ снизу для скролла */
         gap: 0;
     }
 
     .tour-card {
-        position: relative;
-        height: 72px; /* Высота свернутой карточки */
-        margin-top: -24px; /* Наезжание друг на друга */
+        /* СТИКИ: карточки прилипают к верху экрана */
+        position: sticky;
+        top: 100px; /* Отступ от верха (под шапкой) */
+        
+        /* Высота свернутой карточки (виден только заголовок) */
+        height: 72px; 
+        
+        /* Отступ между карточками в стеке. 
+           Благодаря этому карточки не перекрывают друг друга, а ложатся стопкой */
+        margin-bottom: -48px; /* Отрицательный отступ, чтобы они наезжали */
+        
         transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s ease, box-shadow 0.3s ease;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
         background: #fff;
+        
+        /* Базовый z-index */
         z-index: 1; 
     }
 
-    .tour-card:first-child {
-        margin-top: 0;
-    }
-
-    /* Наращиваем z-index, чтобы нижние карточки перекрывали верхние */
-    .tour-card:nth-child(2) { z-index: 2; }
-    .tour-card:nth-child(3) { z-index: 3; }
-    .tour-card:nth-child(4) { z-index: 4; }
-    .tour-card:nth-child(5) { z-index: 5; }
-    .tour-card:nth-child(6) { z-index: 6; }
-    .tour-card:nth-child(7) { z-index: 7; }
-    .tour-card:nth-child(8) { z-index: 8; }
+    /* Делаем z-index для каждой карточки выше предыдущей, чтобы нижние перекрывали верхние */
+    .tour-card:nth-child(1) { z-index: 1; }
+    .tour-card:nth-child(2) { z-index: 2; top: 120px; } /* Чуть ниже */
+    .tour-card:nth-child(3) { z-index: 3; top: 140px; }
+    .tour-card:nth-child(4) { z-index: 4; top: 160px; }
+    .tour-card:nth-child(5) { z-index: 5; top: 180px; }
+    .tour-card:nth-child(6) { z-index: 6; top: 200px; }
+    .tour-card:nth-child(7) { z-index: 7; top: 220px; }
+    .tour-card:nth-child(8) { z-index: 8; top: 240px; }
 
     /* АКТИВНАЯ КАРТОЧКА (Раскрытая) */
     .tour-card.is-active {
         height: 520px;
-        z-index: 100;
-        margin-bottom: 20px; 
+        z-index: 100; /* Перекрывает всё */
+        margin-bottom: 20px; /* Отступ, чтобы следующая карточка не прилипала */
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        /* Убираем фиксированный top для активной, чтобы она не прилипала при скролле внутри */
+        top: auto; 
+        position: relative; 
     }
 
     /* Скрываем контент в свернутом состоянии */
