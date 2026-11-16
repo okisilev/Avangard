@@ -90,39 +90,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTours(filter = 'group') {
         if (!grid) return;
 
-        // Фильтруем туры
         const filteredTours = tours.filter(t => t.type === filter);
 
         grid.innerHTML = filteredTours.map(t => `
-                <article class="tour-card">
-                    <img src="${t.img}" alt="${t.title}" class="tour-card__img" loading="lazy">
-                    <div class="tour-card__overlay"></div>
-                    
-                    <!-- Заголовок (виден всегда, даже в стеке) -->
-                    <div class="tour-card__header">
-                        <h3 class="tour-card__title">${t.title}</h3>
-                    </div>
-    
-                    <!-- Контент (скрыт в неактивных карточках) -->
-                    <div class="tour-card__body">
-                        <div class="tour-card__meta">${t.dates} • ${t.days}</div>
-                        <div class="tour-card__price">${t.price}</div>
-                        
-                        <div class="tour-card__footer">
-                            ${t.badge ? `<span class="tour-card__badge">${t.badge}</span>` : '<span></span>'}
-                            <div class="tour-card__spots">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                ${t.spots} мест
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            `).join('');
+            <!-- ... ваш HTML шаблон карточки ... -->
+        `).join('');
 
-        // После рендера применяем логику стека (только на мобильных)
-        if (window.innerWidth <= 768) {
-            initStackingCards();
-        }
+        // ВАЖНО: Даем браузеру время отрисовать HTML, а затем запускаем стек
+        setTimeout(() => {
+            if (window.innerWidth <= 768) {
+                initStackingCards();
+            }
+        }, 50);
     }
 
     // Обработка кликов по фильтрам
@@ -373,47 +352,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ============ 10. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
+    /* ============ 10. ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ (МОБИЛЬНЫЕ) ============ */
     function initStackingCards() {
-        const cards = document.querySelectorAll('.tour-card');
-
-        // Сбрасываем все классы активности
-        cards.forEach(c => c.classList.remove('is-active'));
-
         if (window.innerWidth > 768) return;
 
+        const cards = document.querySelectorAll('.tour-card');
+        if (cards.length === 0) return;
+
+        // Сбрасываем классы у всех карточек
+        cards.forEach(c => c.classList.remove('is-active'));
+
+        // Делаем ПОСЛЕДНЮЮ карточку активной по умолчанию
+        cards[cards.length - 1].classList.add('is-active');
+
+        // Навешиваем обработчик клика на каждую карточку
         cards.forEach(card => {
-            // По клику раскрываем карточку
             card.addEventListener('click', function (e) {
+                // Если кликнули по уже активной карточке — ничего не делаем
+                if (this.classList.contains('is-active')) return;
+
                 e.stopPropagation();
 
-                const isAlreadyActive = this.classList.contains('is-active');
-
-                // Сворачиваем все
+                // Сворачиваем все карточки
                 cards.forEach(c => c.classList.remove('is-active'));
 
-                // Если не была активна — раскрываем
-                if (!isAlreadyActive) {
-                    this.classList.add('is-active');
-                }
+                // Раскрываем ту, на которую кликнули
+                this.classList.add('is-active');
             });
         });
     }
-
-    // Запуск при загрузке (после рендера туров)
-    if (window.innerWidth <= 768) {
-        initStackingCards();
-    }
-
-    // Перезапуск при ресайзе
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            document.querySelectorAll('.tour-card').forEach(card => {
-                card.classList.remove('is-active');
-            });
-        } else {
-            initStackingCards();
-        }
-    });
 
 });
