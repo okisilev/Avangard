@@ -370,34 +370,75 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ============ 10. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
+    /* ============ 10. АНИМИРОВАННАЯ КОЛОДА ============ */
     function initStackingCards() {
         if (window.innerWidth > 768) return;
 
         const cards = document.querySelectorAll('.tour-card');
         if (cards.length === 0) return;
 
-        // Сбрасываем все классы
-        cards.forEach(c => c.classList.remove('is-active'));
+        const headerHeight = 80; // Высота шапки + отступ
+        const collapsedHeight = 72; // Высота свернутой карточки
 
-        // Делаем ПЕРВУЮ карточку активной при загрузке
+        // 1. Делаем первую карточку активной при загрузке
+        cards.forEach(c => c.classList.remove('is-active'));
         cards[0].classList.add('is-active');
 
-        // Навешиваем обработчик клика на каждую карточку
-        cards.forEach((card) => {
+        // 2. Обработчик клика (как и был)
+        cards.forEach(card => {
             card.addEventListener('click', function (e) {
-                e.stopPropagation(); // Предотвращаем всплытие
-
-                // Если она уже активна — ничего не делаем
+                e.stopPropagation();
                 if (this.classList.contains('is-active')) return;
 
-                // Сворачиваем все карточки
                 cards.forEach(c => c.classList.remove('is-active'));
-
-                // Раскрываем ту, на которую кликнули
                 this.classList.add('is-active');
+
+                // Прокручиваем к карточке, чтобы она встала под шапку
+                const yOffset = -headerHeight;
+                const y = this.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
             });
         });
+
+        // 3. Функция для анимации при скролле (эффект "колоды")
+        const updateCards = () => {
+            // Работает только если есть активная карточка
+            const activeCard = document.querySelector('.tour-card.is-active');
+            if (!activeCard) return;
+
+            const activeRect = activeCard.getBoundingClientRect();
+            const activeTop = activeRect.top; // Позиция активной карточки относительно экрана
+
+            cards.forEach((card, index) => {
+                if (card === activeCard) {
+                    card.style.transform = 'none';
+                    return;
+                }
+
+                // Для карточек, которые ВЫШЕ активной (уже проскроллены)
+                if (index < Array.from(cards).indexOf(activeCard)) {
+                    // Чем дальше карточка вверх, тем сильнее она сдвигается вверх
+                    // Когда активная карточка находится под шапкой, верхние карточки собираются в колоду
+                    const offset = Math.max(0, activeTop - headerHeight);
+
+                    // Сдвигаем карточку вверх, чтобы она наезжала на предыдущую
+                    // Рассчитываем насколько сильно сдвинуть (чтобы виден был только заголовок)
+                    const shift = Math.max(0, (offset / 100) * (collapsedHeight - 24));
+                    card.style.transform = `translateY(-${shift}px)`;
+                }
+                // Для карточек, которые НИЖЕ активной
+                else {
+                    // Они просто остаются на месте, пока активная не проскроллится
+                    card.style.transform = 'none';
+                }
+            });
+        };
+
+        // Навешиваем слушатель на скролл
+        window.addEventListener('scroll', updateCards);
+
+        // Вызываем один раз при инициализации
+        updateCards();
     }
-    
+
 });
