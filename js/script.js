@@ -92,11 +92,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const filteredTours = tours.filter(t => t.type === filter);
 
+        // Восстановленный шаблон карточки
         grid.innerHTML = filteredTours.map(t => `
-            <!-- ... ваш HTML шаблон карточки ... -->
+            <article class="tour-card">
+                <img src="${t.img}" alt="${t.title}" class="tour-card__img" loading="lazy">
+                <div class="tour-card__overlay"></div>
+                
+                <div class="tour-card__header">
+                    <h3 class="tour-card__title">${t.title}</h3>
+                </div>
+
+                <div class="tour-card__body">
+                    <div class="tour-card__meta">${t.dates} • ${t.days}</div>
+                    <div class="tour-card__price">${t.price}</div>
+                    
+                    <div class="tour-card__footer">
+                        ${t.badge ? `<span class="tour-card__badge">${t.badge}</span>` : '<span></span>'}
+                        <div class="tour-card__spots">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            ${t.spots} мест
+                        </div>
+                    </div>
+                </div>
+            </article>
         `).join('');
 
-        // ВАЖНО: Даем браузеру время отрисовать HTML, а затем запускаем стек
+        // Даем браузеру время отрисовать HTML, а затем запускаем стек
         setTimeout(() => {
             if (window.innerWidth <= 768) {
                 initStackingCards();
@@ -192,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    document.querySelectorAll('.testimonial-card, .advantage, .tour-card').forEach(el => {
+    document.querySelectorAll('.testimonial-card, .advantage').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
@@ -312,7 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     };
 
-    // Привязка кнопок к модальному окну
     const openModalBtn = document.getElementById('openModalBtn');
     const openModalBtnHero = document.getElementById('openModalBtnHero');
 
@@ -333,7 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Маска для телефона ---
     const phoneInput = document.querySelector('input[type="tel"]');
     if (phoneInput) {
         phoneInput.addEventListener('input', function (e) {
@@ -342,7 +361,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Отправка формы модального окна ---
     if (modalForm) {
         modalForm.addEventListener('submit', (e) => {
             e.preventDefault();
