@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', onScroll);
     onScroll();
 
-    /* ============ 3. БУРГЕР-МЕНЮ ============ */
+    /* ============ 3. БУРГЕР-МЕНЮ В ШАПКЕ ============ */
     const burger = document.getElementById('burger');
     const nav = document.getElementById('nav');
 
@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
             burger.classList.toggle('active');
             nav.classList.toggle('active');
         });
-        // Закрытие при клике на ссылку
         nav.querySelectorAll('.nav__link').forEach(link => {
             link.addEventListener('click', () => {
                 burger.classList.remove('active');
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const update = (now) => {
                     const progress = Math.min((now - start) / duration, 1);
-                    // Ease-out
                     const eased = 1 - Math.pow(1 - progress, 3);
                     el.textContent = Math.floor(eased * target);
                     if (progress < 1) requestAnimationFrame(update);
@@ -126,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Здесь можно добавить отправку на сервер (fetch / AJAX)
             note.textContent = `Спасибо, ${name}! Мы свяжемся с вами в ближайшее время.`;
             note.style.color = '#1A3B2B';
             form.reset();
@@ -141,21 +138,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!usdEl || !eurEl || !btcEl) return;
 
-        // Ставим состояние загрузки
         [usdEl, eurEl, btcEl].forEach(el => {
             el.textContent = 'загрузка...';
             el.classList.add('loading');
         });
 
-        // --- 7.1 Курсы ЦБ РФ (USD и EUR) ---
-        // Используем cbr-xml-daily.ru — это зеркало официальных данных ЦБ РФ в формате JSON.
-        // Оно отдает заголовок Access-Control-Allow-Origin: *, поэтому работает из браузера.
         try {
             const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
             if (!response.ok) throw new Error('CBR API error');
             const data = await response.json();
 
-            // Структура ответа: { Valute: { USD: { Value: 85.03 }, EUR: { Value: 94.22 }, ... } }
             if (data && data.Valute) {
                 if (data.Valute.USD) {
                     usdEl.textContent = `${data.Valute.USD.Value.toFixed(2)} ₽`;
@@ -176,15 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
             eurEl.classList.remove('loading');
         }
 
-        // --- 7.2 Курс Биткоина ---
-        // Используем публичный API Coinbase. Он отдает курсы криптовалют к фиату.
-        // Запрос: 1 BTC = ? RUB
         try {
             const responseBtc = await fetch('https://api.coinbase.com/v2/exchange-rates?currency=BTC');
             if (!responseBtc.ok) throw new Error('BTC API error');
             const dataBtc = await responseBtc.json();
 
-            // Структура: { data: { rates: { RUB: "6294045.12", ... } } }
             if (dataBtc && dataBtc.data && dataBtc.data.rates && dataBtc.data.rates.RUB) {
                 const btcRate = parseFloat(dataBtc.data.rates.RUB);
                 btcEl.textContent = `${btcRate.toLocaleString('ru-RU', { maximumFractionDigits: 0 })} ₽`;
@@ -199,20 +187,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Запускаем загрузку курсов
     fetchRates();
-    // Опционально: обновлять курсы каждые 5 минут (300000 мс)
     setInterval(fetchRates, 300000);
 
     /* ============ 8. КНОПКА-БУРГЕР В КОНТАКТНОМ ВИДЖЕТЕ ============ */
     const widgetBurger = document.getElementById('widgetBurger');
     if (widgetBurger) {
         widgetBurger.addEventListener('click', () => {
-            // Здесь можно повесить открытие модального меню или выдвижной панели.
-            // Для примера, просто переключим класс у body для демонстрации.
             document.body.classList.toggle('widget-menu-open');
-
-            // Если у вас есть основное меню в шапке (nav), можно синхронизировать:
             const mainNav = document.getElementById('nav');
             const mainBurger = document.getElementById('burger');
             if (mainNav && mainBurger) {
@@ -222,54 +204,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     /* ============ 9. МОДАЛЬНОЕ ОКНО ============ */
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
     const modalForm = document.getElementById('modalForm');
 
-    // Функция открытия
     const openModal = (e) => {
         if (e) e.preventDefault();
         if (modalOverlay) modalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Блокируем скролл фона
+        document.body.style.overflow = 'hidden';
     };
 
-    // Функция закрытия
     const closeModal = () => {
         if (modalOverlay) modalOverlay.classList.remove('active');
-        document.body.style.overflow = ''; // Возвращаем скролл
+        document.body.style.overflow = '';
     };
 
-    // Находим кнопку "Поехали в путешествие" в шапке
-    const openModalBtn = document.querySelector('.btn--white');
+    // Привязка кнопок к модальному окну
+    const openModalBtn = document.getElementById('openModalBtn');
+    const openModalBtnHero = document.getElementById('openModalBtnHero');
 
-    // Вешаем события на кнопку в шапке
-    if (openModalBtn) {
-        openModalBtn.addEventListener('click', openModal);
-    }
+    if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+    if (openModalBtnHero) openModalBtnHero.addEventListener('click', openModal);
 
-    // Также ищем кнопку "Выбрать путешествие" в Hero, если нужно
-    const openModalBtnHero = document.querySelector('.btn--accent');
-    if (openModalBtnHero) {
-        openModalBtnHero.addEventListener('click', openModal);
-    }
+    if (modalClose) modalClose.addEventListener('click', closeModal);
 
-    // Закрытие по крестику
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
-    }
-
-    // Закрытие по клику на затемненный фон
     if (modalOverlay) {
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) closeModal();
         });
     }
 
-    // Закрытие по клавише Esc
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+        if (e.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('active')) {
             closeModal();
         }
     });
@@ -283,19 +250,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Отправка формы ---
+    // --- Отправка формы модального окна ---
     if (modalForm) {
         modalForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Здесь логика отправки данных на сервер
             alert('Форма успешно отправлена! (Заглушка)');
             closeModal();
             modalForm.reset();
         });
     }
+
     /* ============ 10. ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ (МОБИЛЬНЫЕ) ============ */
     function initStackingCards() {
-        // Работает только на мобильных устройствах
         if (window.innerWidth > 768) return;
 
         const cards = document.querySelectorAll('.tour-card');
@@ -306,21 +272,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!nextCard) return;
 
                 const cardRect = card.getBoundingClientRect();
-                // Проверяем, насколько следующая карточка наехала на текущую
                 const nextCardRect = nextCard.getBoundingClientRect();
-
-                // Если верх следующей карточки находится близко к верху текущей
                 const distance = cardRect.bottom - nextCardRect.top;
 
                 if (distance > 0) {
-                    // Рассчитываем прогресс наложения (от 0 до 1)
-                    // 100 — это примерное расстояние, за которое происходит анимация
                     const progress = Math.min(distance / 100, 1);
-
-                    // Уменьшаем масштаб и немного затемняем нижнюю карточку
-                    const scale = 1 - (progress * 0.05); // Уменьшение до 0.95
-                    const opacity = 1 - (progress * 0.3); // Затухание
-
+                    const scale = 1 - (progress * 0.05);
+                    const opacity = 1 - (progress * 0.3);
                     card.style.transform = `scale(${scale})`;
                     card.style.opacity = opacity;
                 } else {
@@ -330,23 +288,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        // Слушаем скролл
         window.addEventListener('scroll', updateCards);
-
-        // Инициализация при загрузке
         updateCards();
     }
 
-    // Запускаем после загрузки DOM
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initStackingCards);
     } else {
         initStackingCards();
     }
 
-    // Перезапускаем при изменении размера окна
     window.addEventListener('resize', () => {
-        // Сбрасываем стили, если вернулись на десктоп
         if (window.innerWidth > 768) {
             document.querySelectorAll('.tour-card').forEach(card => {
                 card.style.transform = '';

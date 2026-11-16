@@ -432,6 +432,7 @@ button {
     cursor: pointer;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
     transition: transform var(--transition);
+    z-index: 1; /* Чтобы не перекрывать шапку */
 }
 
 .tour-card:hover {
@@ -610,6 +611,38 @@ button {
     min-height: 20px;
 }
 
+/* ============ КОНТАКТНЫЕ ДАННЫЕ В СЕКЦИИ ============ */
+.contact__details {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 1rem;
+    color: var(--color-text-main);
+}
+
+.contact-detail__icon {
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.contact-detail__text {
+    color: var(--color-text-main);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: color var(--transition);
+}
+
+a.contact-detail__text:hover {
+    color: var(--color-dusty-blue);
+}
+
 /* ============ ФУТЕР ============ */
 .footer {
     background: var(--color-dark-green);
@@ -619,7 +652,7 @@ button {
 
 .footer__container {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr; /* 4 колонки из-за курсов */
+    grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 40px;
     align-items: start;
 }
@@ -648,7 +681,7 @@ button {
     font-size: 0.85rem;
     text-align: right;
     opacity: 0.7;
-    grid-column: 1 / -1; /* На всю ширину */
+    grid-column: 1 / -1;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 20px;
     margin-top: 20px;
@@ -699,80 +732,6 @@ button {
     font-size: 0.9rem;
 }
 
-/* ============ АДАПТИВ ============ */
-@media (max-width: 1024px) {
-    .header__logo {
-        font-size: 1.3rem;
-    }
-    .contact-widget__pill {
-        display: none; /* Скрываем телефон на планшетах */
-    }
-    .footer__container {
-        grid-template-columns: 1fr 1fr;
-    }
-    .footer__rates {
-        border-left: none;
-        padding-left: 0;
-        grid-column: 1 / -1;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        align-items: center;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        padding-top: 20px;
-    }
-    .footer__rates-title {
-        width: 100%;
-        margin-bottom: 0;
-    }
-}
-
-@media (max-width: 992px) {
-    .contact__container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-}
-
-@media (max-width: 768px) {
-    .section {
-        padding: 70px 0;
-    }
-    .btn--white {
-        padding: 10px 16px;
-        font-size: 0.85rem;
-    }
-    .btn--white svg {
-        display: none;
-    }
-    .header__logo {
-        font-size: 1.1rem;
-    }
-    .hero__actions {
-        flex-direction: column;
-        align-items: center;
-    }
-    .btn--large {
-        width: 100%;
-        max-width: 320px;
-    }
-    .footer__container {
-        grid-template-columns: 1fr;
-    }
-    .footer__copy {
-        text-align: left;
-    }
-}
-
-@media (max-width: 480px) {
-    .testimonial-card {
-        padding: 24px;
-    }
-    .tour-card {
-        aspect-ratio: 4 / 5;
-    }
-}
-
 /* ============ МОДАЛЬНОЕ ОКНО ============ */
 .modal-overlay {
     position: fixed;
@@ -797,7 +756,7 @@ button {
 
 .modal {
     position: relative;
-    background: rgba(30, 33, 36, 0.85); /* Темный полупрозрачный фон */
+    background: rgba(30, 33, 36, 0.85);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -841,7 +800,6 @@ button {
     min-height: 600px;
 }
 
-/* Левая часть с картинкой */
 .modal__image {
     position: relative;
     overflow: hidden;
@@ -856,7 +814,6 @@ button {
     inset: 0;
 }
 
-/* Правая часть с формой */
 .modal__content {
     padding: 48px;
     display: flex;
@@ -878,7 +835,6 @@ button {
     margin-bottom: 32px;
 }
 
-/* Форма */
 .modal-form {
     display: flex;
     flex-direction: column;
@@ -907,7 +863,6 @@ button {
     background: rgba(0, 0, 0, 0.3);
 }
 
-/* Группа ввода телефона */
 .modal-phone-group {
     position: relative;
     display: flex;
@@ -925,7 +880,6 @@ button {
     padding-left: 48px;
 }
 
-/* Мессенджеры */
 .modal-messengers {
     margin-top: 8px;
     margin-bottom: 8px;
@@ -970,7 +924,6 @@ button {
     border-color: #fff;
 }
 
-/* Кнопка */
 .modal-submit {
     width: 100%;
     justify-content: center;
@@ -980,7 +933,6 @@ button {
     margin-top: 8px;
 }
 
-/* Соглашение */
 .modal-agreement {
     display: flex;
     align-items: flex-start;
@@ -1032,13 +984,50 @@ button {
     text-decoration: underline;
 }
 
-/* Адаптив модального окна */
+/* ============ АДАПТИВ ============ */
+@media (max-width: 1024px) {
+    .header__logo {
+        font-size: 1.3rem;
+    }
+    .contact-widget__pill {
+        display: none;
+    }
+    .footer__container {
+        grid-template-columns: 1fr 1fr;
+    }
+    .footer__rates {
+        border-left: none;
+        padding-left: 0;
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 20px;
+    }
+    .footer__rates-title {
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .contact__container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .contact__details {
+        margin-top: 30px;
+    }
+}
+
 @media (max-width: 900px) {
     .modal__grid {
         grid-template-columns: 1fr;
     }
     .modal__image {
-        display: none; /* Скрываем картинку на мобилках */
+        display: none;
     }
     .modal__content {
         padding: 32px 24px;
@@ -1048,39 +1037,70 @@ button {
     }
 }
 
-
-
 @media (max-width: 768px) {
-    /* Настройки контейнера для стека */
+    .section {
+        padding: 70px 0;
+    }
+    .btn--white {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+    .btn--white svg {
+        display: none;
+    }
+    .header__logo {
+        font-size: 1.1rem;
+    }
+    .hero__actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn--large {
+        width: 100%;
+        max-width: 320px;
+    }
+    .footer__container {
+        grid-template-columns: 1fr;
+    }
+    .footer__copy {
+        text-align: left;
+    }
+
+    /* ============ ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ ============ */
     .tours__grid {
         display: flex;
         flex-direction: column;
-        gap: 0; /* Убираем стандартный отступ сетки */
-        padding-bottom: 50px; /* Отступ снизу, чтобы последняя карточка не прилипала */
+        gap: 0;
+        padding-bottom: 50px;
     }
 
-    /* Настройки самой карточки */
     .tour-card {
         position: sticky;
-        top: 100px; /* Расстояние от верха экрана, где будет "залипать" карточка. Подберите под высоту вашей шапки */
-        margin-bottom: -50px; /* Отрицательный отступ, чтобы они наезжали друг на друга */
+        top: 100px;
+        margin-bottom: -50px;
         transform-origin: top center;
         transition: transform 0.3s ease, opacity 0.3s ease;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2); /* Тень сверху, чтобы было видно наложение */
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
         border-radius: 20px;
-        /* Убираем фиксированную высоту, чтобы карточка могла тянуться по контенту, 
-           но задаем минимальную, чтобы она выглядела как на десктопе */
-        aspect-ratio: auto; 
-        min-height: 450px; 
+        aspect-ratio: auto;
+        min-height: 450px;
+        z-index: 1;
     }
 
-    /* Делаем так, чтобы контент карточки не обрезался и был читаемым */
     .tour-card__content {
         padding: 30px 20px;
     }
 
-    /* Чуть уменьшаем заголовок для мобилок */
     .tour-card__title {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonial-card {
+        padding: 24px;
+    }
+    .tour-card {
+        aspect-ratio: 4 / 5;
     }
 }
