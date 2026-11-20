@@ -353,7 +353,8 @@ button {
 
 .contact-dropdown__socials {
     display: flex;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .social-icon {
@@ -365,19 +366,55 @@ button {
     align-items: center;
     justify-content: center;
     color: #fff;
-    transition: background var(--transition);
+    transition: all var(--transition);
+    text-decoration: none;
 }
 
 .social-icon:hover {
-    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.whatsapp:hover {
-    color: #25D366;
+/* Цвета брендов при наведении */
+.whatsapp:hover { 
+    background: #25D366; 
+    color: #fff; 
+    border-color: #25D366;
+}
+.telegram:hover { 
+    background: #0088cc; 
+    color: #fff; 
+    border-color: #0088cc;
+}
+.wechat:hover { 
+    background: #07C160; 
+    color: #fff; 
+    border-color: #07C160;
+}
+.instagram:hover { 
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+    color: #fff; 
+    border-color: transparent;
+}
+.tiktok:hover { 
+    background: #000000; 
+    color: #fff; 
+    border-color: #333;
+}
+.max-app:hover { 
+    background: #FF4D4D; /* Примерный цвет для MAX, можно поменять */
+    color: #fff; 
+    border-color: #FF4D4D;
 }
 
-.telegram:hover {
-    color: #0088cc;
+/* Адаптив для меню контактов на мобильных */
+@media (max-width: 768px) {
+    .contact-dropdown {
+        width: 100%;
+    }
+    .contact-dropdown__socials {
+        justify-content: center; /* Центрируем иконки на мобильном */
+    }
 }
 
 .contact-dropdown__close {
