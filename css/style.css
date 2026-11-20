@@ -14,7 +14,9 @@
 }
 
 /* ============ СБРОС ============ */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -105,6 +107,7 @@ button {
     background: var(--color-dark-green);
     color: var(--color-text-light);
 }
+
 .btn--primary:hover {
     background: #122a1e;
 }
@@ -113,6 +116,7 @@ button {
     background: var(--color-burgundy);
     color: var(--color-text-light);
 }
+
 .btn--accent:hover {
     background: #4a0e14;
 }
@@ -122,6 +126,7 @@ button {
     color: var(--color-text-light);
     border-color: rgba(255, 255, 255, 0.6);
 }
+
 .btn--ghost:hover {
     background: rgba(255, 255, 255, 0.12);
 }
@@ -138,6 +143,7 @@ button {
     align-items: center;
     transition: transform var(--transition), box-shadow var(--transition);
 }
+
 .btn--white:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
@@ -194,13 +200,7 @@ button {
     z-index: 2;
 }
 
-/* ============ ВИДЖЕТ КОНТАКТОВ (В ШАПКЕ) ============ */
-.contact-widget {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
+/* ============ ВИДЖЕТ КОНТАКТОВ (БУРГЕР) ============ */
 .contact-widget__burger {
     width: 48px;
     height: 48px;
@@ -227,38 +227,195 @@ button {
     border-radius: 2px;
 }
 
-.contact-widget__pill {
-    height: 48px;
-    background: #1E2124;
-    border-radius: 12px;
+/* ============ ВЫПАДАЮЩИЙ СПИСОК ЯЗЫКОВ (НОВЫЙ) ============ */
+.lang-dropdown-wrapper {
+    position: relative;
+}
+
+/* Кнопка с глобусом */
+.lang-globe-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    /* Делаем круглой или скругленной как бургер */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
     display: flex;
     align-items: center;
-    padding: 0 18px;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.lang-globe-btn:hover,
+.lang-globe-btn.active {
+    background: #fff;
+    color: var(--color-dark-green);
+    border-color: #fff;
+}
+
+/* Меню выбора языка */
+.lang-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    min-width: 160px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1002;
+}
+
+.lang-dropdown-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Элементы списка */
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-main);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: left;
+}
+
+.lang-option:hover {
+    background: #f4f5f7;
+}
+
+.lang-option.active {
+    background: rgba(26, 59, 43, 0.08);
+    color: var(--color-dark-green);
+    font-weight: 600;
+}
+
+.flag {
+    font-size: 1.2rem;
+}
+
+/* Адаптив для меню языков на мобильных */
+@media (max-width: 768px) {
+    .lang-dropdown-menu {
+        right: -10px;
+        /* Немного сдвигаем, чтобы не прилипало к краю экрана */
+    }
+}
+
+/* ============ ВЫПАДАЮЩЕЕ МЕНЮ КОНТАКТОВ ============ */
+.contact-dropdown {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    background: #1E2124;
+    z-index: 1001;
+    padding: 80px 24px 24px;
+    transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.contact-dropdown.open {
+    left: 0;
+}
+
+.contact-dropdown__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-dropdown__phone {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-dropdown__socials {
+    display: flex;
     gap: 16px;
 }
 
-.contact-widget__phone {
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-.contact-widget__socials {
+.social-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
-    gap: 12px;
-}
-
-.contact-widget__socials a {
+    justify-content: center;
     color: #fff;
-    display: flex;
-    transition: opacity var(--transition);
-    opacity: 0.8;
+    transition: background var(--transition);
 }
 
-.contact-widget__socials a:hover {
+.social-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.whatsapp:hover {
+    color: #25D366;
+}
+
+.telegram:hover {
+    color: #0088cc;
+}
+
+.contact-dropdown__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.contact-dropdown__close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Затемнение фона при открытом меню */
+body.menu-open::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+body.menu-open::after {
     opacity: 1;
+    visibility: visible;
 }
 
 /* ============ HERO ============ */
@@ -286,19 +443,22 @@ button {
 }
 
 @keyframes zoomSlow {
-    from { transform: scale(1); }
-    to { transform: scale(1.08); }
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
 }
 
 .hero__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(26, 59, 43, 0.55) 0%,
-        rgba(26, 59, 43, 0.75) 60%,
-        rgba(26, 59, 43, 0.95) 100%
-    );
+    background: linear-gradient(to bottom,
+            rgba(26, 59, 43, 0.55) 0%,
+            rgba(26, 59, 43, 0.75) 60%,
+            rgba(26, 59, 43, 0.95) 100%);
 }
 
 .hero__content {
@@ -352,8 +512,17 @@ button {
 }
 
 @keyframes scrollLine {
-    0%, 100% { transform: scaleY(0.4); transform-origin: top; }
-    50% { transform: scaleY(1); transform-origin: top; }
+
+    0%,
+    100% {
+        transform: scaleY(0.4);
+        transform-origin: top;
+    }
+
+    50% {
+        transform: scaleY(1);
+        transform-origin: top;
+    }
 }
 
 /* ============ ОТЗЫВЫ ============ */
@@ -432,7 +601,7 @@ button {
     cursor: pointer;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
     transition: transform var(--transition);
-    z-index: 1; /* Чтобы не перекрывать шапку */
+    z-index: 1;
 }
 
 .tour-card:hover {
@@ -455,12 +624,10 @@ button {
 .tour-card__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(26, 59, 43, 0.92) 0%,
-        rgba(26, 59, 43, 0.4) 45%,
-        transparent 100%
-    );
+    background: linear-gradient(to top,
+            rgba(26, 59, 43, 0.92) 0%,
+            rgba(26, 59, 43, 0.4) 45%,
+            transparent 100%);
 }
 
 .tour-card__content {
@@ -673,34 +840,29 @@ a.contact-detail__text:hover {
     font-size: 0.9rem;
     transition: color var(--transition);
 }
+
 .footer__nav a:hover {
     color: #fff;
 }
 
-/* Обновленный нижний колонтитул */
 .footer__copy {
     grid-column: 1 / -1;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 24px;
     margin-top: 24px;
-    
-    /* Делаем flex-контейнер для выравнивания в строку */
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-    
     font-size: 0.85rem;
     opacity: 0.8;
 }
 
-/* Левая часть (копирайт) */
 .footer__copy-left {
     text-align: left;
 }
 
-/* Центральная часть (документы) */
 .footer__copy-center {
     display: flex;
     gap: 20px;
@@ -717,7 +879,6 @@ a.contact-detail__text:hover {
     color: #fff;
 }
 
-/* Правая часть (Telegram) */
 .footer__copy-right {
     text-align: right;
     display: flex;
@@ -739,14 +900,14 @@ a.contact-detail__text:hover {
     opacity: 0.7;
 }
 
-/* Адаптив для мобильных */
+/* Адаптив для мобильных футера */
 @media (max-width: 768px) {
     .footer__copy {
         flex-direction: column;
         text-align: center;
         gap: 12px;
     }
-    
+
     .footer__copy-left,
     .footer__copy-center,
     .footer__copy-right {
@@ -754,14 +915,12 @@ a.contact-detail__text:hover {
         justify-content: center;
         width: 100%;
     }
-    
+
     .footer__copy-center {
         flex-direction: column;
         gap: 8px;
     }
 }
-
-
 
 /* ============ КУРСЫ ВАЛЮТ В ФУТЕРЕ ============ */
 .footer__rates {
@@ -995,7 +1154,7 @@ a.contact-detail__text:hover {
     transition: all 0.2s;
 }
 
-.messenger-radio input:checked + .messenger-radio__box {
+.messenger-radio input:checked+.messenger-radio__box {
     background: rgba(255, 255, 255, 0.15);
     border-color: #fff;
 }
@@ -1032,12 +1191,12 @@ a.contact-detail__text:hover {
     transition: all 0.2s;
 }
 
-.modal-agreement input:checked + .modal-agreement__box {
+.modal-agreement input:checked+.modal-agreement__box {
     background: #fff;
     border-color: #fff;
 }
 
-.modal-agreement input:checked + .modal-agreement__box::after {
+.modal-agreement input:checked+.modal-agreement__box::after {
     content: '';
     position: absolute;
     left: 6px;
@@ -1065,12 +1224,11 @@ a.contact-detail__text:hover {
     .header__logo {
         font-size: 1.3rem;
     }
-    .contact-widget__pill {
-        display: none;
-    }
+
     .footer__container {
         grid-template-columns: 1fr 1fr;
     }
+
     .footer__rates {
         border-left: none;
         padding-left: 0;
@@ -1082,6 +1240,7 @@ a.contact-detail__text:hover {
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         padding-top: 20px;
     }
+
     .footer__rates-title {
         width: 100%;
         margin-bottom: 0;
@@ -1093,6 +1252,7 @@ a.contact-detail__text:hover {
         grid-template-columns: 1fr;
         gap: 40px;
     }
+
     .contact__details {
         margin-top: 30px;
     }
@@ -1102,12 +1262,15 @@ a.contact-detail__text:hover {
     .modal__grid {
         grid-template-columns: 1fr;
     }
+
     .modal__image {
         display: none;
     }
+
     .modal__content {
         padding: 32px 24px;
     }
+
     .modal__title {
         font-size: 1.6rem;
     }
@@ -1117,32 +1280,39 @@ a.contact-detail__text:hover {
     .section {
         padding: 70px 0;
     }
+
     .btn--white {
         padding: 10px 16px;
         font-size: 0.85rem;
     }
+
     .btn--white svg {
         display: none;
     }
+
     .header__logo {
         font-size: 1.1rem;
     }
+
     .hero__actions {
         flex-direction: column;
         align-items: center;
     }
+
     .btn--large {
         width: 100%;
         max-width: 320px;
     }
+
     .footer__container {
         grid-template-columns: 1fr;
     }
+
     .footer__copy {
         text-align: left;
     }
 
-    /* ============ ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ ============ */
+    /* ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ */
     .tours__grid {
         display: flex;
         flex-direction: column;
@@ -1170,12 +1340,24 @@ a.contact-detail__text:hover {
     .tour-card__title {
         font-size: 1.5rem;
     }
+
+    /* Адаптив для переключателя языков */
+    .lang-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    /* Адаптив для меню контактов */
+    .contact-dropdown {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
     .testimonial-card {
         padding: 24px;
     }
+
     .tour-card {
         aspect-ratio: 4 / 5;
     }
@@ -1308,12 +1490,10 @@ a.contact-detail__text:hover {
 .tour-card__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.4) 0%,
-        rgba(0, 0, 0, 0.1) 40%,
-        rgba(0, 0, 0, 0.8) 100%
-    );
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0.1) 40%,
+            rgba(0, 0, 0, 0.8) 100%);
     z-index: 2;
 }
 
@@ -1329,7 +1509,7 @@ a.contact-detail__text:hover {
     font-size: 1.4rem;
     font-weight: 700;
     line-height: 1.2;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* Основной контент (в нижней части) */
@@ -1395,45 +1575,61 @@ a.contact-detail__text:hover {
 
     .tour-card {
         position: sticky;
-        top: 80px; /* Отступ от верха (учитываем шапку) */
-        height: 120px; /* Высота свернутой карточки (виден только заголовок) */
-        margin-bottom: 16px; /* Расстояние между карточками в стеке */
-        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                    margin 0.4s ease;
+        top: 80px;
+        height: 120px;
+        margin-bottom: 16px;
+        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+            margin 0.4s ease;
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
-        background: #1A1B1E; /* Темный фон для неактивных */
+        background: #1A1B1E;
     }
 
-    /* Активная карточка (раскрытая) */
     .tour-card.is-active {
-        height: 550px; /* Полная высота */
+        height: 550px;
         background: #fff;
         z-index: 10;
     }
 
-    /* Наезжание карточек друг на друга */
-    .tour-card:nth-child(2) { top: 90px; }
-    .tour-card:nth-child(3) { top: 100px; }
-    .tour-card:nth-child(4) { top: 110px; }
-    .tour-card:nth-child(5) { top: 120px; }
-    .tour-card:nth-child(6) { top: 130px; }
-    .tour-card:nth-child(7) { top: 140px; }
-    .tour-card:nth-child(8) { top: 150px; }
+    .tour-card:nth-child(2) {
+        top: 90px;
+    }
 
-    /* Скрываем лишний контент в неактивных карточках */
+    .tour-card:nth-child(3) {
+        top: 100px;
+    }
+
+    .tour-card:nth-child(4) {
+        top: 110px;
+    }
+
+    .tour-card:nth-child(5) {
+        top: 120px;
+    }
+
+    .tour-card:nth-child(6) {
+        top: 130px;
+    }
+
+    .tour-card:nth-child(7) {
+        top: 140px;
+    }
+
+    .tour-card:nth-child(8) {
+        top: 150px;
+    }
+
     .tour-card .tour-card__body {
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    
+
     .tour-card .tour-card__overlay {
-        background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
     }
 
-    /* В активной карточке показываем всё */
     .tour-card.is-active .tour-card__body {
         opacity: 1;
         visibility: visible;
@@ -1441,10 +1637,9 @@ a.contact-detail__text:hover {
     }
 
     .tour-card.is-active .tour-card__overlay {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.8) 100%);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.8) 100%);
     }
 
-    /* Позиционирование заголовка */
     .tour-card__header {
         padding: 20px;
         transition: all 0.3s ease;
@@ -1462,16 +1657,15 @@ a.contact-detail__text:hover {
         white-space: normal;
     }
 
-    /* Адаптация изображения */
     .tour-card__img {
         height: 100%;
         object-fit: cover;
     }
-    
-    /* Убираем hover-эффект на мобильных */
+
     .tour-card:hover {
         transform: none;
     }
+
     .tour-card:hover .tour-card__img {
         transform: none;
     }

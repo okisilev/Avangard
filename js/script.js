@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     /* ============ 1. КАТАЛОГ ТУРОВ ============ */
     const tours = [
         {
@@ -83,49 +82,38 @@ document.addEventListener('DOMContentLoaded', () => {
             badge: ''
         }
     ];
-
     const grid = document.getElementById('toursGrid');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
     function renderTours(filter = 'group') {
         if (!grid) return;
-
-        // Фильтруем туры
         const filteredTours = tours.filter(t => t.type === filter);
-
         grid.innerHTML = filteredTours.map(t => `
-                <article class="tour-card">
-                    <img src="${t.img}" alt="${t.title}" class="tour-card__img" loading="lazy">
-                    <div class="tour-card__overlay"></div>
-                    
-                    <!-- Заголовок (виден всегда, даже в стеке) -->
-                    <div class="tour-card__header">
-                        <h3 class="tour-card__title">${t.title}</h3>
-                    </div>
-    
-                    <!-- Контент (скрыт в неактивных карточках) -->
-                    <div class="tour-card__body">
-                        <div class="tour-card__meta">${t.dates} • ${t.days}</div>
-                        <div class="tour-card__price">${t.price}</div>
-                        
-                        <div class="tour-card__footer">
-                            ${t.badge ? `<span class="tour-card__badge">${t.badge}</span>` : '<span></span>'}
-                            <div class="tour-card__spots">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                ${t.spots} мест
-                            </div>
+            <article class="tour-card">
+                <img src="${t.img}" alt="${t.title}" class="tour-card__img" loading="lazy">
+                <div class="tour-card__overlay"></div>
+                <div class="tour-card__header">
+                    <h3 class="tour-card__title">${t.title}</h3>
+                </div>
+                <div class="tour-card__body">
+                    <div class="tour-card__meta">${t.dates} • ${t.days}</div>
+                    <div class="tour-card__price">${t.price}</div>
+                    <div class="tour-card__footer">
+                        ${t.badge ? `<span class="tour-card__badge">${t.badge}</span>` : '<span></span>'}
+                        <div class="tour-card__spots">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            ${t.spots} мест
                         </div>
                     </div>
-                </article>
-            `).join('');
+                </div>
+            </article>
+        `).join('');
 
-        // После рендера применяем логику стека (только на мобильных)
         if (window.innerWidth <= 768) {
             initStackingCards();
         }
     }
 
-    // Обработка кликов по фильтрам
     if (filterBtns.length > 0) {
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -136,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Инициализация при загрузке
     if (grid) {
         renderTours('group');
     }
@@ -156,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ============ 3. БУРГЕР-МЕНЮ В ШАПКЕ ============ */
     const burger = document.getElementById('burger');
     const nav = document.getElementById('nav');
-
     if (burger && nav) {
         burger.addEventListener('click', () => {
             burger.classList.toggle('active');
@@ -173,12 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ============ 4. АНИМИРОВАННЫЕ СЧЕТЧИКИ ============ */
     const stats = document.querySelectorAll('.stat__number');
     let statsAnimated = false;
-
     const animateStats = () => {
         if (statsAnimated) return;
         const statsSection = document.querySelector('.stats');
         if (!statsSection) return;
-
         const rect = statsSection.getBoundingClientRect();
         if (rect.top < window.innerHeight - 100) {
             statsAnimated = true;
@@ -186,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const target = +el.dataset.target;
                 const duration = 1800;
                 const start = performance.now();
-
                 const update = (now) => {
                     const progress = Math.min((now - start) / duration, 1);
                     const eased = 1 - Math.pow(1 - progress, 3);
@@ -212,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, observerOptions);
-
     document.querySelectorAll('.testimonial-card, .advantage, .tour-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
@@ -223,20 +205,17 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ============ 6. ФОРМА ОБРАТНОЙ СВЯЗИ ============ */
     const form = document.getElementById('contactForm');
     const note = document.getElementById('formNote');
-
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const name = form.name.value.trim();
             const phone = form.phone.value.trim();
             const email = form.email.value.trim();
-
             if (!name || !phone || !email) {
                 note.textContent = 'Пожалуйста, заполните все поля.';
                 note.style.color = '#5E1219';
                 return;
             }
-
             note.textContent = `Спасибо, ${name}! Мы свяжемся с вами в ближайшее время.`;
             note.style.color = '#1A3B2B';
             form.reset();
@@ -248,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const usdEl = document.getElementById('rate-usd');
         const eurEl = document.getElementById('rate-eur');
         const btcEl = document.getElementById('rate-btc');
-
         if (!usdEl || !eurEl || !btcEl) return;
 
         [usdEl, eurEl, btcEl].forEach(el => {
@@ -260,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
             if (!response.ok) throw new Error('CBR API error');
             const data = await response.json();
-
             if (data && data.Valute) {
                 if (data.Valute.USD) {
                     usdEl.textContent = `${data.Valute.USD.Value.toFixed(2)} ₽`;
@@ -285,7 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const responseBtc = await fetch('https://api.coinbase.com/v2/exchange-rates?currency=BTC');
             if (!responseBtc.ok) throw new Error('BTC API error');
             const dataBtc = await responseBtc.json();
-
             if (dataBtc && dataBtc.data && dataBtc.data.rates && dataBtc.data.rates.RUB) {
                 const btcRate = parseFloat(dataBtc.data.rates.RUB);
                 btcEl.textContent = `${btcRate.toLocaleString('ru-RU', { maximumFractionDigits: 0 })} ₽`;
@@ -299,7 +275,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btcEl.classList.remove('loading');
         }
     }
-
     fetchRates();
     setInterval(fetchRates, 300000);
 
@@ -327,27 +302,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalOverlay) modalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
-
     const closeModal = () => {
         if (modalOverlay) modalOverlay.classList.remove('active');
         document.body.style.overflow = '';
     };
 
-    // Привязка кнопок к модальному окну
     const openModalBtn = document.getElementById('openModalBtn');
     const openModalBtnHero = document.getElementById('openModalBtnHero');
-
     if (openModalBtn) openModalBtn.addEventListener('click', openModal);
     if (openModalBtnHero) openModalBtnHero.addEventListener('click', openModal);
-
     if (modalClose) modalClose.addEventListener('click', closeModal);
-
     if (modalOverlay) {
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) closeModal();
         });
     }
-
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('active')) {
             closeModal();
@@ -376,18 +345,14 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ============ 10. ЭФФЕКТ СТЕКА ДЛЯ КАРТОЧЕК ТУРОВ (МОБИЛЬНЫЕ) ============ */
     function initStackingCards() {
         if (window.innerWidth > 768) return;
-
         const cards = document.querySelectorAll('.tour-card');
-
         const updateCards = () => {
             cards.forEach((card, index) => {
                 const nextCard = cards[index + 1];
                 if (!nextCard) return;
-
                 const cardRect = card.getBoundingClientRect();
                 const nextCardRect = nextCard.getBoundingClientRect();
                 const distance = cardRect.bottom - nextCardRect.top;
-
                 if (distance > 0) {
                     const progress = Math.min(distance / 100, 1);
                     const scale = 1 - (progress * 0.05);
@@ -400,17 +365,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         };
-
         window.addEventListener('scroll', updateCards);
         updateCards();
     }
-
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initStackingCards);
     } else {
         initStackingCards();
     }
-
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             document.querySelectorAll('.tour-card').forEach(card => {
@@ -424,14 +386,11 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ============ 11. УМНЫЙ СТЕК КАРТОЧЕК (МОБИЛЬНЫЕ) ============ */
     function initStackingCards() {
         if (window.innerWidth > 768) return;
-
         const cards = document.querySelectorAll('.tour-card');
         if (cards.length === 0) return;
 
-        // Создаем наблюдатель за появлением карточек в зоне видимости
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // Если карточка пересекает центр экрана (примерно)
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-active');
                 } else {
@@ -439,31 +398,121 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }, {
-            // Карточка считается активной, если она пересекает 50% высоты экрана
             rootMargin: '-40% 0px -40% 0px',
             threshold: 0
         });
 
         cards.forEach(card => {
             observer.observe(card);
-            // По клику тоже делаем активной (на случай если скролл не сработал)
             card.addEventListener('click', () => {
                 cards.forEach(c => c.classList.remove('is-active'));
                 card.classList.add('is-active');
             });
         });
     }
-
-    // Перезапуск при ресайзе (если пользователь меняет ориентацию)
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             document.querySelectorAll('.tour-card').forEach(card => {
                 card.classList.remove('is-active');
-                card.style = ''; // сбрасываем инлайн-стили
+                card.style = '';
             });
         } else {
             initStackingCards();
         }
     });
 
+    /* ============ 12. МЕНЮ КОНТАКТОВ И ВЫБОР ЯЗЫКА (ГЛОБУС) ============ */
+    const contactBurgerBtn = document.getElementById('contactBurgerBtn');
+    const contactDropdown = document.getElementById('contactDropdown');
+    const closeContactDropdown = document.getElementById('closeContactDropdown');
+
+    // Элементы для языка
+    const langGlobeBtn = document.getElementById('langGlobeBtn');
+    const langDropdownMenu = document.getElementById('langDropdownMenu');
+    const langOptions = document.querySelectorAll('.lang-option');
+
+    // --- Логика меню контактов (без изменений) ---
+    if (contactBurgerBtn && contactDropdown) {
+        contactBurgerBtn.addEventListener('click', () => {
+            contactDropdown.classList.add('open');
+            document.body.classList.add('menu-open');
+            // Закрываем меню языков, если оно открыто
+            if (langDropdownMenu) langDropdownMenu.classList.remove('open');
+            if (langGlobeBtn) langGlobeBtn.classList.remove('active');
+        });
+    }
+
+    if (closeContactDropdown && contactDropdown) {
+        closeContactDropdown.addEventListener('click', () => {
+            contactDropdown.classList.remove('open');
+            document.body.classList.remove('menu-open');
+        });
+    }
+
+    // --- Логика выбора языка ---
+    if (langGlobeBtn && langDropdownMenu) {
+        langGlobeBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Чтобы клик не ушел на document
+            langDropdownMenu.classList.toggle('open');
+            langGlobeBtn.classList.toggle('active');
+
+            // Закрываем контакты, если они открыты
+            if (contactDropdown && contactDropdown.classList.contains('open')) {
+                contactDropdown.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            }
+        });
+
+        // Обработка клика по варианту языка
+        langOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Убираем активный класс у всех
+                langOptions.forEach(opt => opt.classList.remove('active'));
+                // Добавляем текущему
+                option.classList.add('active');
+
+                // Закрываем меню
+                langDropdownMenu.classList.remove('open');
+                langGlobeBtn.classList.remove('active');
+
+                console.log(`Язык переключен на: ${option.dataset.lang}`);
+                // Здесь можно добавить логику смены контента
+            });
+        });
+    }
+
+    // Глобальный обработчик клика для закрытия обоих меню
+    document.addEventListener('click', (e) => {
+        const isClickInsideLang = langDropdownMenu && langDropdownMenu.contains(e.target);
+        const isClickOnGlobe = langGlobeBtn && langGlobeBtn.contains(e.target);
+
+        const isClickInsideContact = contactDropdown && contactDropdown.contains(e.target);
+        const isClickOnContactBurger = contactBurgerBtn && contactBurgerBtn.contains(e.target);
+
+        // Закрываем меню языков
+        if (!isClickInsideLang && !isClickOnGlobe && langDropdownMenu && langDropdownMenu.classList.contains('open')) {
+            langDropdownMenu.classList.remove('open');
+            langGlobeBtn.classList.remove('active');
+        }
+
+        // Закрываем меню контактов
+        if (!isClickInsideContact && !isClickOnContactBurger && contactDropdown && contactDropdown.classList.contains('open')) {
+            contactDropdown.classList.remove('open');
+            document.body.classList.remove('menu-open');
+        }
+    });
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (contactDropdown && contactDropdown.classList.contains('open')) {
+                contactDropdown.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            }
+            if (langDropdownMenu && langDropdownMenu.classList.contains('open')) {
+                langDropdownMenu.classList.remove('open');
+                langGlobeBtn.classList.remove('active');
+            }
+        }
+    });
 });
