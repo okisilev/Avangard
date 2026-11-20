@@ -122,7 +122,12 @@
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero__bg">
-            <img src="https://picsum.photos/id/1015/1920/1080" alt="Premium Travel Background" class="hero__img">
+            <!-- Видео фон -->
+            <video class="hero__video" autoplay muted loop playsinline>
+                <source src="video/Img 6272.mp4" type="video/mp4">
+                <!-- Резервное изображение, если видео не загрузится или браузер его не поддерживает -->
+                <img src="https://picsum.photos/id/1015/1920/1080" alt="Premium Travel Background" class="hero__img">
+            </video>
             <div class="hero__overlay"></div>
         </div>
         <div class="container hero__content">
