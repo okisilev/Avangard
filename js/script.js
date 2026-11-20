@@ -2,24 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ============ 1. КАТАЛОГ ТУРОВ ============ */
     const tours = [
         {
-            title: 'Мадагаскар',
-            dates: '26 ноября — 02 декабря 2026',
+            title: 'Кавказ на Harley-Davidson',
+            dates: '21 сентября - 27 сентября 2026',
             days: '7 дней',
-            price: 'от 450 000 ₽',
+            price: 'от 1 200 000 ₽',
             spots: 12,
             type: 'group',
             img: 'https://picsum.photos/id/1018/600/800',
-            badge: 'NEW'
+            badge: 'АРХИВ'
         },
         {
-            title: 'Альпы на суперкарах',
-            dates: '26 — 30 января 2027',
-            days: '5 дней',
-            price: 'от 600 000 ₽',
+            title: 'Байкал на внедорожниках',
+            dates: '19 — 27 Октября 2026',
+            days: '8 дней',
+            price: 'от 900 000 ₽',
             spots: 8,
             type: 'group',
             img: 'https://picsum.photos/id/1036/600/800',
-            badge: ''
+            badge: 'АРХИВ'
         },
         {
             title: 'Антарктида 2027',
