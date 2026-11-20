@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             badge: 'АРХИВ'
         },
         {
-            title: 'Антарктида 2027',
+            title: 'Зимний Байкал',
             dates: '12 — 22 февраля 2027',
             days: '11 дней',
             price: 'от 1 500 000 ₽',
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             badge: 'ХИТ'
         },
         {
-            title: 'Патагония: Аргентина и Чили',
+            title: 'Банный тур',
             dates: '17 — 25 февраля 2027',
             days: '9 дней',
             price: 'от 800 000 ₽',
