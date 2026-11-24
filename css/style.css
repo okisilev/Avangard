@@ -187,7 +187,7 @@ button {
     font-size: 1.6rem;
     font-weight: 800;
     letter-spacing: 2px;
-    color: #fff;
+    color: #FFFFFF;
     text-decoration: none;
     white-space: nowrap;
 }
@@ -204,7 +204,7 @@ button {
 .contact-widget__burger {
     width: 48px;
     height: 48px;
-    background: #1E2124;
+    background: #5E1219;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -234,25 +234,29 @@ button {
 
 /* Кнопка с глобусом */
 .lang-globe-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    /* Делаем круглой или скругленной как бургер */
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
+    width: 48px; /* Сделали такой же размер, как у бургера */
+    height: 48px;
+    border-radius: 12px; /* Скругление как у бургера */
+    background: #5E1219; 
+    border: none; /* Убрали рамку */
+    color: #fff; /* Белая иконка */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all var(--transition);
+    transition: background var(--transition);
 }
 
-.lang-globe-btn:hover,
+/* Эффект при наведении (как у бургера) */
+.lang-globe-btn:hover, 
 .lang-globe-btn.active {
-    background: #fff;
-    color: var(--color-dark-green);
-    border-color: #fff;
+    background: #2c3034; 
+}
+
+/* Размер самой иконки внутри */
+.lang-globe-btn svg {
+    width: 20px;
+    height: 20px;
 }
 
 /* Меню выбора языка */
@@ -325,7 +329,14 @@ button {
     left: -100%;
     width: 280px;
     height: 100vh;
-    background: #1E2124;
+    
+    /* Заменяем сплошной цвет на картинку */
+    background-color: #2A1B1E; /* Оставляем как запасной цвет, если картинка не загрузится */
+    /*background-image: url('../img/menu-bg.jfif');  Укажите правильный путь к картинке! */
+    background-size: cover; /* Растягиваем картинку на весь блок */
+    background-position: center; /* Центрируем картинку */
+    background-repeat: no-repeat;
+    
     z-index: 1001;
     padding: 80px 24px 24px;
     transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);

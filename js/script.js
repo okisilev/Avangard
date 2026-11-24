@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             price: 'от 1 200 000 ₽',
             spots: 12,
             type: 'group',
-            img: 'https://picsum.photos/id/1018/600/800',
+            img: './img/kavkaz.jpg',
             badge: 'АРХИВ'
         },
         {
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             price: 'от 900 000 ₽',
             spots: 8,
             type: 'group',
-            img: 'https://picsum.photos/id/1036/600/800',
+            img: './img/Байкал.jfif',
             badge: 'АРХИВ'
         },
         {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             price: 'от 1 500 000 ₽',
             spots: 15,
             type: 'group',
-            img: 'https://picsum.photos/id/1039/600/800',
+            img: './img/photo_2026-11-24_12-26-57.jpg',
             badge: 'ХИТ'
         },
         {
