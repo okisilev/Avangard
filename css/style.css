@@ -969,7 +969,7 @@ a.contact-detail__text:hover {
 
 .modal {
     position: relative;
-    background: rgba(30, 33, 36, 0.85);
+    background: #5E1219;
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -980,7 +980,8 @@ a.contact-detail__text:hover {
     overflow-y: auto;
     transform: translateY(30px);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 
+                0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .modal-overlay.active .modal { transform: translateY(0); }
