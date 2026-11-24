@@ -10,6 +10,135 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <!-- Микроразметка Schema.org для Главной страницы -->
+    <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "TravelAgency",
+                  "@id": "https://ваш-домен.ru/#organization",
+                  "name": "The Avangard club",
+                  "url": "https://ваш-домен.ru",
+                  "logo": "https://ваш-домен.ru/img/logo.png",
+                  "image": "https://ваш-домен.ru/img/halokopter.webp",
+                  "description": "Создаем премиальные путешествия, которые становятся легендами. Экспедиции для искушенных путешественников.",
+                  "telephone": "+7-929-432-63-23",
+                  "email": "avangard.bia@mail.ru",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "ул. Барклая, д. 6, стр. 3, помещ. 47Н/5",
+                    "addressLocality": "Москва",
+                    "postalCode": "121087",
+                    "addressCountry": "RU"
+                  },
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 55.743158,
+                    "longitude": 37.492780
+                  },
+                  "openingHoursSpecification": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                      "Monday",
+                      "Tuesday",
+                      "Wednesday",
+                      "Thursday",
+                      "Friday"
+                    ],
+                    "opens": "09:00",
+                    "closes": "19:00"
+                  },
+                  "sameAs": [
+                    "https://t.me/Fun_oleg",
+                    "https://wa.me/79294326323"
+                  ]
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://ваш-домен.ru/#website",
+                  "url": "https://ваш-домен.ru",
+                  "name": "The Avangard club",
+                  "publisher": {
+                    "@id": "https://ваш-домен.ru/#organization"
+                  },
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://ваш-домен.ru/?s={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                },
+                {
+                  "@type": "ItemList",
+                  "name": "Каталог путешествий",
+                  "description": "Список премиальных туров и экспедиций",
+                  "itemListElement": [
+                    {
+                      "@type": "ListItem",
+                      "position": 1,
+                      "item": {
+                        "@type": "TouristTrip",
+                        "name": "Кавказ на Harley-Davidson",
+                        "description": "Экспедиция на мотоциклах Harley-Davidson по Кавказу.",
+                        "image": "https://ваш-домен.ru/img/kavkaz.jpg",
+                        "touristType": "Групповой тур",
+                        "itinerary": {
+                          "@type": "ItemList",
+                          "numberOfItems": 7,
+                          "itemListElement": [
+                            { "@type": "ListItem", "position": 1, "name": "День 1" }
+                          ]
+                        },
+                        "offers": {
+                          "@type": "Offer",
+                          "priceCurrency": "RUB",
+                          "price": "1200000",
+                          "availability": "https://schema.org/InStock",
+                          "url": "https://ваш-домен.ru/tours/kavkaz-harley"
+                        }
+                      }
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 2,
+                      "item": {
+                        "@type": "TouristTrip",
+                        "name": "Байкал на внедорожниках",
+                        "description": "Зимний тур по льду Байкала на подготовленных внедорожниках.",
+                        "image": "https://ваш-домен.ru/img/Байкал.jfif",
+                        "touristType": "Групповой тур",
+                        "offers": {
+                          "@type": "Offer",
+                          "priceCurrency": "RUB",
+                          "price": "900000",
+                          "availability": "https://schema.org/InStock",
+                          "url": "https://ваш-домен.ru/tours/baikal-offroad"
+                        }
+                      }
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 3,
+                      "item": {
+                        "@type": "TouristTrip",
+                        "name": "Зимний Байкал",
+                        "description": "Классический зимний тур на Байкал с проживанием в бутик-отеле.",
+                        "image": "https://ваш-домен.ru/img/photo_2026-11-24_12-26-57.jpg",
+                        "touristType": "Групповой тур",
+                        "offers": {
+                          "@type": "Offer",
+                          "priceCurrency": "RUB",
+                          "price": "1500000",
+                          "availability": "https://schema.org/InStock",
+                          "url": "https://ваш-домен.ru/tours/baikal-winter"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+            </script>
 </head>
 
 <body>
@@ -64,6 +193,7 @@
     <!-- Выпадающее меню контактов (скрыто по умолчанию) -->
     <div class="contact-dropdown" id="contactDropdown">
         <div class="contact-dropdown__inner">
+
             <a href="tel:+79294326323" class="contact-dropdown__phone">+7 (929) 432-63-23</a>
             <div class="contact-dropdown__socials">
                 <!-- WhatsApp -->
@@ -215,8 +345,8 @@
             <div class="contact__info">
                 <h2 class="section-title">Хотите отправиться в незабываемое путешествие?</h2>
                 <p class="section-subtitle" style="padding-bottom: 20px;">Оставьте контактные данные и наш специалист
-                свяжется с вами для
-                консультации.</p>
+                    свяжется с вами для
+                    консультации.</p>
                 <p>ООО "КЛУБ АВАНГАРД" 2026г.</p>
                 <p>Номер в реестре туроператоров: В031-00161-00/06256234</p>
                 <div class="contact__details">
