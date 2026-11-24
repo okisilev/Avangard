@@ -1120,6 +1120,7 @@ a.contact-detail__text:hover {
         overflow: hidden;
         box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
         background: #1A1B1E;
+        z-index: 1;
     }
 
     .tour-card.is-active {
@@ -1127,14 +1128,14 @@ a.contact-detail__text:hover {
         background: #fff;
         z-index: 10;
     }
-
-    .tour-card:nth-child(2) { top: 90px; }
-    .tour-card:nth-child(3) { top: 100px; }
-    .tour-card:nth-child(4) { top: 110px; }
-    .tour-card:nth-child(5) { top: 120px; }
-    .tour-card:nth-child(6) { top: 130px; }
-    .tour-card:nth-child(7) { top: 140px; }
-    .tour-card:nth-child(8) { top: 150px; }
+    .tour-card:nth-child(1) { top: 80px; z-index: 1; }
+    .tour-card:nth-child(2) { top: 90px; z-index: 2; }
+    .tour-card:nth-child(3) { top: 100px; z-index: 3; }
+    .tour-card:nth-child(4) { top: 110px; z-index: 4; }
+    .tour-card:nth-child(5) { top: 120px; z-index: 5; }
+    .tour-card:nth-child(6) { top: 130px; z-index: 6; }
+    .tour-card:nth-child(7) { top: 140px; z-index: 7; }
+    .tour-card:nth-child(8) { top: 150px; z-index: 8; }
 
     .tour-card .tour-card__body {
         opacity: 0;
