@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             price: 'от 800 000 ₽',
             spots: 10,
             type: 'group',
-            img: 'https://picsum.photos/id/1043/600/800',
+            img: './img/Баня.jfif',
             badge: ''
         },
         {
